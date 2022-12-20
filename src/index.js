@@ -1,67 +1,64 @@
 import * as THREE from 'three'
 import './styles/main.scss'
 
+import SceneManager from './SceneManager/scenemanager.js';
+import ThreeRenderer from './Renderer/renderer.js';
+import ObjectManager from './ObjectManager/objectmanager.js';
+import GameSystem  from './GameSystem/gamesystem.js';
 
-let frustumSize = 600;
-let SCREEN_WIDTH = window.innerWidth;
-let SCREEN_HEIGHT = window.innerHeight;
-let aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
 
-let camera, renderer, container, scene;
 
-export const GameSystem = null;
-export const InputSystem = null;
-export const ObjectManager = null;
-export const SoundSystem = null;
-export const SceneManager = null;
+
+let  scene;
+
+let prevTime = 0, currentTime;
+
+export const mGameSystem = new GameSystem();
+export const mInputSystem = null;
+export const mObjectManager = new ObjectManager();
+export const mSoundSystem = null;
+export const mSceneManager = new SceneManager();
+export const mRenderer = new ThreeRenderer();
 
 
 
 init()
 
-animate()
 
 function init(){
-    container = document.createElement( 'div' );
-	document.body.appendChild( container );
+    
 
 	scene = new THREE.Scene();
 
-    camera = new THREE.OrthographicCamera( 0.5 * frustumSize * aspect / - 2, 0.5 * frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, 150, 1000 );
+    mRenderer.bindResize();
 
+    mGameSystem.Init();
 
-
-    renderer = new THREE.WebGLRenderer( { antialias: true } );
-	renderer.setPixelRatio( window.devicePixelRatio );
-	renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
-	container.appendChild( renderer.domElement );
-
-	renderer.autoClear = true;
-
-
-
-    addEventListener("resize", onResize);
+    requestAnimationFrame(gameloop);
 
 
 }
 
 
-function animate(){
-    requestAnimationFrame(animate)
+function gameloop(timestamp){
 
-    renderer.render(scene, camera)
+    const elapsed = (timestamp - prevTime)/1000
+    // const fps = 1000 / (timestampe - prevTime)
+
+    prevTime = timestamp
+
+    
+    mGameSystem.EarlyUpdate(elapsed);
+    mGameSystem.Update(elapsed)
+    mGameSystem.LateUpdate(elapsed)
+    
+
+    mRenderer.render(scene)
+
+    requestAnimationFrame(gameloop)
 
 }
 
 
 
-function onResize(){
-    SCREEN_WIDTH = window.innerWidth;
-	SCREEN_HEIGHT = window.innerHeight;
-	aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
 
-	renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
-
-	camera.aspect = 0.5 * aspect;
-	camera.updateProjectionMatrix();
-}
