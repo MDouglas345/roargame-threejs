@@ -31,6 +31,7 @@ export class RenderRes2D extends RenderRes{
         // negative Z values go into the screen
         // positive Z goes towards the camera
         this.mesh.position.set(object.rigidbody.Pos.x, object.rigidbody.Pos.y, object.renderlayer)
+        this.mesh.rotation.z = object.rigidbody.Orien;
     }
 }
 
