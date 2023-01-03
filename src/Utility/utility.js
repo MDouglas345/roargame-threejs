@@ -1,8 +1,11 @@
 export class Vec2{
-  constructor(x,y){
-    this.X = x;
-    this.Y = y;
+  
+  constructor(x, y){
+    this.X = x
+    this.Y = y
   }
+
+ 
 
   Add(other){
     this.X += other.X;

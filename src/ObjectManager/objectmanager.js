@@ -30,6 +30,11 @@ class ObjectManager{
     }
 
     CleanUp(){
+    /*
+        Can be optimized by making gameobjects keep track of there location in the layers and when needed to delete,
+        push itself into a delete array. Iterate that array and delete the objects,
+        instead of asking every object in the scene if it needs to be deleted.
+    */
     this.layers.forEach(function(layer, Lindex){
       layer.forEach(function(item, Iindex, array){
         if (item.NeedsDelete){

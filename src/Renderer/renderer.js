@@ -19,6 +19,12 @@ class ThreeRenderer{
 
 	    this.renderer.autoClear = true;
 
+        /*
+            Makes it so that Threejs will render objects in the order they where added to the scene.
+            also might just help overall performance
+        */
+        this.renderer.sortObjects = false;
+
         
     }
 

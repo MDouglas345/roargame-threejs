@@ -22,11 +22,15 @@ export const mRenderer = new ThreeRenderer();
 
 
 
+
+
+
 init()
 
 
+
+
 function init(){
-    
 
 	scene = new THREE.Scene();
 
@@ -49,8 +53,9 @@ function gameloop(timestamp){
 
     
     mGameSystem.EarlyUpdate(elapsed);
-    mGameSystem.Update(elapsed)
-    mGameSystem.LateUpdate(elapsed)
+    mGameSystem.Update(elapsed);
+    mGameSystem.LateUpdate(elapsed);
+    mGameSystem.UpdateGeometries();
     
 
     mRenderer.render(scene)

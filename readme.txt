@@ -16,3 +16,21 @@ within a data file (An object that needs to save data will need to override Save
 Gameobject persistence
 If a gameobject needs to be consistent throughout scene changes, it needs to declare that within its makeup, that way when another scene is being loaded,
 the ID of the layer that it was in will be recorded along with the object itself, and be reinserted into the layers after the change has been made.
+
+Moving objects
+Threejs's Mesh objects are the way to move things on screen in world space. This means the physics system will need to interact  witht
+the Mesh's position member. Same with rotation.
+
+Use and abuse the instancedmesh objects
+
+Reference for instancedmesh frustum culling, if it is needed -> https://discourse.threejs.org/t/how-to-do-frustum-culling-with-instancedmesh/22633
+
+Reference for instancedmesh texture atlasing!! -> https://discourse.threejs.org/t/how-to-apply-offsets-for-texture-atlas-in-instancedmesh/33191/12
+Calculating the UV when using the texture atlas :
+
+        Requires each instance know an "ID" for the texture it needs, this will be in the form of a Vec2.
+        The unit UV space of a texture in the atlas needs to be calculated : legnthOfTexture / lengthOfAtlas (unitUV)
+        The UV space of the atlas needs to be calculated : ID.x * unitUV  (offsetUV)      
+        The final UV is caluclated as : vUV * unitUV + offsetUV
+
+Reference for screen to world position -> https://stackoverflow.com/questions/34660063/threejs-converting-from-screen-2d-coordinate-to-world-3d-coordinate-on-the-came

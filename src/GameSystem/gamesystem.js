@@ -11,6 +11,7 @@
 */
 
 import * as m from '../index'
+import { PhysicsSystem } from '../Physics/physics';
 
 
 
@@ -24,7 +25,7 @@ export class GameSystem{
 
     this.ObjectHandleInstance = m.mObjectManager;
 
-    //this.Physics = new PS.PhysicsSystem();
+    this.Physics = new PhysicsSystem();
 
     //this.QuadTree = new QT.QuadTree(this.m_Player);
 
@@ -76,7 +77,7 @@ export class GameSystem{
     The idea being that all objects could have a rigidbody or not and will update accordingly
     */
 
-    //this.Physics.Update(elapsed);
+    this.Physics.Update(elapsed);
 
     //this.QuadTree.CreateTree();
 
@@ -114,6 +115,15 @@ export class GameSystem{
   //console.log(this.ObjectHandleInstance.m_Entities);
 
 
+  }
+
+
+  UpdateGeometries(){
+    this.ObjectHandleInstance.layers.forEach(layer =>{
+      layer.forEach(item =>{
+        item.UpdateGeometry(item);
+      });
+    });
   }
 
 
