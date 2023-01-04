@@ -57,7 +57,6 @@ function gameloop(timestamp){
     mGameSystem.LateUpdate(elapsed);
     mGameSystem.UpdateGeometries();
     
-
     mRenderer.render(scene)
 
     requestAnimationFrame(gameloop)

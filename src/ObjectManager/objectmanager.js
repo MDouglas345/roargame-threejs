@@ -3,23 +3,27 @@
 */
 
 import { copyInstance } from "../Utility/utility";
+import * as THREE from 'three';
 
 class ObjectManager{
     constructor(){
         this.layers = [];
+        
     }
 
     addlayer(){
         this.layers.push([])
     }
 
-    loadScene(scene){
+    loadScene(objects, scene){
         this.layers = []
+        
 
-        for (layer in scene.layer){
+        for (layer in objects.layer){
             let newlayer = []
 
             for (item in layer){
+                item.AddToScene(scene);
                 newlayer.push(copyInstance(item))
             }
 

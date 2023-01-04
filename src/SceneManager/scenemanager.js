@@ -12,8 +12,9 @@ class SceneManager{
     }
 
     loadScene(name){
-        this.activeScene = this.scenes[name]
-        roarengine.mObjectManager.loadScene(this.activeScene)
+        this.activeScene = new Scene();
+        roarengine.mObjectManager.loadScene(this.scenes[name], this.activeScene)
+        
     }
 }
 

@@ -5,8 +5,6 @@ class GameObject{
     constructor(){
         this.rigidbody = Rigidbody();
         this.renderres = NoRes();
-        this.renderlayer = -1;
-
     }
 
     EarlyUpdate(elapsed){
@@ -23,6 +21,10 @@ class GameObject{
 
     UpdateGeometry(){
         this.renderres.Update(this)
+    }
+
+    AddToScene(scene){
+        this.renderres.addToScene(scene);
     }
 
 }
