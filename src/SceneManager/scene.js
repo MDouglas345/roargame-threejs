@@ -3,8 +3,30 @@
 */
 
 
-class Scene{
+export class Scene{
     constructor(){
         this.layers = []
+        this.MainCamera = null;
+    }
+
+    SetMainCamera(object){
+        this.MainCamera = object;
+        if (this.layers.length == 0){
+            console.log("No layers in scene! Cannot add camera!");
+            return;
+        }
+        this.layers[this.layers.length-1].push(object); // add the camera to the last layer of the scene. 
+    }
+
+    addLayer(){
+        this.layers.push([]);
+    }
+
+    addObject(object, layer){
+        if (layer < 0 || layer > this.layers.length){
+            console.log("Object cannot be pushed into invalid layer!")
+            return;
+        }
+        this.layers[layer].push(object);
     }
 }

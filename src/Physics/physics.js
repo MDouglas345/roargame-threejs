@@ -48,12 +48,12 @@ export class PhysicsSystem{
 
     this.ObjectHandleInstance.layers.forEach(layer =>{
       layer.forEach(item =>{
-        item.Rigidbody.AddGrav(this.m_gravity);
-        item.Rigidbody.AddAcc(this.m_GlobalForces);
+        item.rigidbody.AddGrav(this.m_gravity);
+        item.rigidbody.AddAcc(this.m_GlobalForces);
 
-        item.Rigidbody.Update(elapsed);
+        item.rigidbody.Update(elapsed);
 
-        item.Rigidbody.ResetAcc();
+        item.rigidbody.ResetAcc();
       });
     });
   }

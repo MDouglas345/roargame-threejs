@@ -1,4 +1,4 @@
-import { Vec2 } from "../Utility/Utility";
+import { Vec2 } from "../Utility/utility.js";
 
 
 export class Rigidbody{

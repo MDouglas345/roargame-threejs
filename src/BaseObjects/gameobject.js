@@ -3,8 +3,13 @@ import { NoRes } from "../Renderer/renderres";
 
 class GameObject{
     constructor(){
-        this.rigidbody = Rigidbody();
-        this.renderres = NoRes();
+        this.rigidbody = new Rigidbody();
+        this.renderres = new NoRes();
+        
+    }
+
+    Init(){
+
     }
 
     EarlyUpdate(elapsed){

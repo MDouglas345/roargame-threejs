@@ -5,6 +5,8 @@ export class Vec2{
     this.Y = y
   }
 
+  
+
  
 
   Add(other){

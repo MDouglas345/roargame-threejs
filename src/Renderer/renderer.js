@@ -6,7 +6,8 @@ class ThreeRenderer{
         this.SCREEN_WIDTH = window.innerWidth;
         this.SCREEN_HEIGHT = window.innerHeight;
         this.aspect = this.SCREEN_WIDTH / this.SCREEN_HEIGHT;
-        this.camera = new THREE.OrthographicCamera( 0.5 * this.frustumSize * this.aspect / - 2, 0.5 * this.frustumSize * this.aspect / 2, this.frustumSize / 2, this.frustumSize / - 2, 150, 1000 );
+
+        this.camera = null; //new THREE.OrthographicCamera( 0.5 * this.frustumSize * this.aspect / - 2, 0.5 * this.frustumSize * this.aspect / 2, this.frustumSize / 2, this.frustumSize / - 2, 150, 1000 );
         
 
         let container = document.createElement( 'div' );
@@ -18,6 +19,7 @@ class ThreeRenderer{
 	    container.appendChild( this.renderer.domElement );
 
 	    this.renderer.autoClear = true;
+        this.renderer.setClearColor(new THREE.Color(0x553321));
 
         /*
             Makes it so that Threejs will render objects in the order they where added to the scene.
