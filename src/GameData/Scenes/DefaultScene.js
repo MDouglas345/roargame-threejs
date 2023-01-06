@@ -51,10 +51,11 @@ export class DefaultScene extends Scene{
         this.addLayer();
         this.addLayer();
 
-        let testobj = new Plane2D();
+        let testobj = new Plane2D(10,10);
+        testobj.rigidbody.Pos.X = 0;
 
         let cam = new Camera2D(200);
-        cam.rigidbody.Pos.Y = 0;
+    
 
         let axeshelper = new CoordHelper();
         

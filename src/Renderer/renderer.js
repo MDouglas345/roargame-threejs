@@ -47,7 +47,7 @@ class ThreeRenderer{
 
         this.renderer.setSize( this.SCREEN_WIDTH, this.SCREEN_HEIGHT );
 
-        this.camera.aspect = 0.5 * this.aspect;
+        this.camera.aspect = this.aspect;
         this.camera.updateProjectionMatrix();
     }
 }

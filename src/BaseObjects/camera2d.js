@@ -12,7 +12,7 @@ class Camera2D extends Camera{
         let SCREEN_HEIGHT = window.innerHeight;
         let aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
         //let cam = new OrthographicCamera( 0.5 * frustumSize * aspect / - 2, 0.5 * frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, 0, 1000 )
-        //let cam = new OrthographicCamera( -100, 100, -100, 100, 1, 100 )
+        //let cam = new OrthographicCamera( -700, 700, -700, 700, 1, 1000 )
         let cam = new PerspectiveCamera(75, aspect, 1, 1000);
         super(cam);
 
