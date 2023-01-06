@@ -2,11 +2,31 @@
     This is an object that holds a reference to a threejs scene and an object structure that contains all objects in that scene
 */
 
-import * as THREE from 'three'
 
-class Scene{
+export class Scene{
     constructor(){
-        this.scene = THREE.Scene()
         this.layers = []
+        this.MainCamera = null;
+    }
+
+    SetMainCamera(object){
+        this.MainCamera = object;
+        if (this.layers.length == 0){
+            console.log("No layers in scene! Cannot add camera!");
+            return;
+        }
+        this.layers[this.layers.length-1].push(object); // add the camera to the last layer of the scene. 
+    }
+
+    addLayer(){
+        this.layers.push([]);
+    }
+
+    addObject(object, layer){
+        if (layer < 0 || layer > this.layers.length){
+            console.log("Object cannot be pushed into invalid layer!")
+            return;
+        }
+        this.layers[layer].push(object);
     }
 }

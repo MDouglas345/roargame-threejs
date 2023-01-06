@@ -3,30 +3,51 @@
 */
 
 import { copyInstance } from "../Utility/utility";
+import * as roarengine from "../index.js";
+
 
 class ObjectManager{
     constructor(){
-        this.layers = [];
+        this.layers = [[]];
+        
     }
 
     addlayer(){
         this.layers.push([])
     }
 
-    loadScene(scene){
+    loadScene(objects, scene){
         this.layers = []
 
-        for (layer in scene.layer){
+
+        objects.layers.forEach((layer) => {
+          let newlayer = []
+
+          layer.forEach((item) => {
+              item.AddToScene(scene);
+              newlayer.push(copyInstance(item))
+          });
+
+          this.layers.push(newlayer);
+
+
+        });
+        
+        /*
+        for (let layer in objects.layers){
             let newlayer = []
 
-            for (item in layer){
+            for (let item in object.layers[layer]){
+                let Item = object.layers[layer
+                item.AddToScene(scene);
                 newlayer.push(copyInstance(item))
             }
 
             this.layers.push(newlayer)
         }
+        */
         
-
+        roarengine.mRenderer.camera = objects.MainCamera.camera;
     }
 
     CleanUp(){

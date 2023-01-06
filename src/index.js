@@ -1,4 +1,4 @@
-import * as THREE from 'three'
+
 import './styles/main.scss'
 
 import SceneManager from './SceneManager/scenemanager.js';
@@ -6,10 +6,12 @@ import ThreeRenderer from './Renderer/renderer.js';
 import ObjectManager from './ObjectManager/objectmanager.js';
 import GameSystem  from './GameSystem/gamesystem.js';
 
+import AppData from "./AppData.js";
 
 
 
-let  scene;
+
+
 
 let prevTime = 0, currentTime;
 
@@ -32,7 +34,10 @@ init()
 
 function init(){
 
-	scene = new THREE.Scene();
+	
+    document.title = AppData.gamename;
+
+    mSceneManager.establishScenes(AppData.scenes)
 
     mRenderer.bindResize();
 
@@ -57,8 +62,7 @@ function gameloop(timestamp){
     mGameSystem.LateUpdate(elapsed);
     mGameSystem.UpdateGeometries();
     
-
-    mRenderer.render(scene)
+    mRenderer.render(mSceneManager.activeScene)
 
     requestAnimationFrame(gameloop)
 

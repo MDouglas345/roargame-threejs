@@ -1,10 +1,13 @@
-import * as m from '../index'
+
 import GameObject from './gameobject'
 
 
-class Camera extends GameObject{
-    constructor(){
-        this.camera = m.mRenderer.camera
+export class Camera extends GameObject{
+    constructor(camera){
+        super();
+        this.camera = camera;
         this.rigidbody.Disable();
+        
     }
+
 }

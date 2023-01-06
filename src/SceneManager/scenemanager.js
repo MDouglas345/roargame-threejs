@@ -5,6 +5,7 @@ class SceneManager{
     constructor(){
         this.scenes = {}
         this.activeScene = null;
+        this.activeSceneName = null;
     }
 
     addScene(scene, name){
@@ -12,9 +13,27 @@ class SceneManager{
     }
 
     loadScene(name){
-        this.activeScene = this.scenes[name]
-        roarengine.mObjectManager.loadScene(this.activeScene)
+        this.activeScene = new Scene();
+        this.activeSceneName = name;
+        roarengine.mObjectManager.loadScene(this.scenes[name], this.activeScene)
+        
+        
     }
+
+    establishScenes(appdata){
+        for (let key in appdata){
+            let scenedata = appdata[key];
+            this.addScene(scenedata.scene, scenedata.name);
+        }
+
+        this.loadScene(appdata[0].name);
+    }
+
+    resetScene(){
+        if (this.activeScene != null && this.activeSceneName != null){
+            this.loadScene(this.activeSceneName);
+        }
+    }   
 }
 
 

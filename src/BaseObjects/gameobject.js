@@ -3,9 +3,12 @@ import { NoRes } from "../Renderer/renderres";
 
 class GameObject{
     constructor(){
-        this.rigidbody = Rigidbody();
-        this.renderres = NoRes();
-        this.renderlayer = -1;
+        this.rigidbody = new Rigidbody();
+        this.renderres = new NoRes();
+        
+    }
+
+    Init(){
 
     }
 
@@ -23,6 +26,10 @@ class GameObject{
 
     UpdateGeometry(){
         this.renderres.Update(this)
+    }
+
+    AddToScene(scene){
+        this.renderres.addToScene(scene);
     }
 
 }
