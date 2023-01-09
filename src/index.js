@@ -7,6 +7,10 @@ import ObjectManager from './ObjectManager/objectmanager.js';
 import GameSystem  from './GameSystem/gamesystem.js';
 
 import AppData from "./AppData.js";
+import { KeyboardController } from './Controller/KeyboardController';
+
+
+
 
 
 
@@ -16,11 +20,15 @@ import AppData from "./AppData.js";
 let prevTime = 0, currentTime;
 
 export const mGameSystem = new GameSystem();
-export const mInputSystem = null;
+export const mInputSystem = new KeyboardController();
 export const mObjectManager = new ObjectManager();
 export const mSoundSystem = null;
 export const mSceneManager = new SceneManager();
 export const mRenderer = new ThreeRenderer();
+
+
+
+
 
 
 
@@ -43,6 +51,16 @@ function init(){
 
     mGameSystem.Init();
 
+    document.addEventListener("keyup", function(event){
+        mInputSystem.HandleButtonEvent(event.keyCode, event.type);
+    },true);
+
+
+
+    document.addEventListener("keydown", function(event){
+        mInputSystem.HandleButtonEvent(event.keyCode, event.type);
+    },true);
+
     requestAnimationFrame(gameloop);
 
 
@@ -63,6 +81,8 @@ function gameloop(timestamp){
     mGameSystem.UpdateGeometries();
     
     mRenderer.render(mSceneManager.activeScene)
+
+    //console.log(elapsed);
 
     requestAnimationFrame(gameloop)
 

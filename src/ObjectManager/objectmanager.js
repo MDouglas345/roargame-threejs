@@ -47,7 +47,7 @@ class ObjectManager{
         }
         */
         
-        roarengine.mRenderer.camera = objects.MainCamera.camera;
+        roarengine.mRenderer.camera = objects.MainCamera
     }
 
     CleanUp(){

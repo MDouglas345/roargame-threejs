@@ -3,6 +3,7 @@ import Camera2D from "../../BaseObjects/camera2d";
 import CoordHelper from "../../BaseObjects/coordhelper";
 import Plane2D from "../../BaseObjects/plane2d";
 import { Scene } from "../../SceneManager/scene";
+import * as util from "../../Utility/utility.js"
 
 
 /*
@@ -44,6 +45,7 @@ import { Scene } from "../../SceneManager/scene";
 */
 
 
+
 export class DefaultScene extends Scene{
     constructor(){
         super();
@@ -56,10 +58,18 @@ export class DefaultScene extends Scene{
 
         let cam = new Camera2D(200);
     
-
-        let axeshelper = new CoordHelper();
         
+        
+        let planes = [];
 
+        for (let i = 0; i < 1000; i++){
+            planes.push(new Plane2D(util.getRandomFloat(10) + 5, util.getRandomFloat(10) + 5));
+            planes[i].rigidbody.Pos = new util.Vec2(util.getRandomFloat(800) - 400, util.getRandomFloat(200) - 100);
+            planes[i].rigidbody.AngVel = util.getRandomFloat(5) - 2.5;
+            this.addObject(planes[i], 1);
+        }
+        
+        
         this.addObject(testobj, 0);
         //this.addObject(axeshelper, 0);
 

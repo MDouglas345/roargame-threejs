@@ -10,4 +10,8 @@ export class Camera extends GameObject{
         
     }
 
+    resize(aspect){
+
+    }
+
 }

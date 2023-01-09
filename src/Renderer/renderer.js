@@ -32,7 +32,7 @@ class ThreeRenderer{
 
 
     render(scene){
-        this.renderer.render(scene, this.camera)
+        this.renderer.render(scene, this.camera.camera)
     }
 
     bindResize(){
@@ -47,8 +47,9 @@ class ThreeRenderer{
 
         this.renderer.setSize( this.SCREEN_WIDTH, this.SCREEN_HEIGHT );
 
-        this.camera.aspect = this.aspect;
-        this.camera.updateProjectionMatrix();
+        this.camera.resize(this.aspect);
+
+        
     }
 }
 
