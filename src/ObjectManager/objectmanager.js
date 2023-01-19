@@ -16,7 +16,7 @@ class ObjectManager{
         this.layers.push([])
     }
 
-    loadScene(objects, scene){
+    loadScene(objects, scene, uiscene){
         this.layers = []
 
 
@@ -24,7 +24,12 @@ class ObjectManager{
           let newlayer = []
 
           layer.forEach((item) => {
-              item.AddToScene(scene);
+              if (item.UILayer == true){
+                item.AddToScene(uiscene);
+              }
+              else{
+                item.AddToScene(scene);
+              }
               newlayer.push(copyInstance(item))
           });
 
@@ -48,6 +53,7 @@ class ObjectManager{
         */
         
         roarengine.mRenderer.camera = objects.MainCamera
+        roarengine.mRenderer.uicamera = objects.UICamera;
     }
 
     CleanUp(){

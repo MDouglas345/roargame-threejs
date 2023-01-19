@@ -6,6 +6,7 @@ class SceneManager{
         this.scenes = {}
         this.activeScene = null;
         this.activeSceneName = null;
+        this.activeUIScene = null;
     }
 
     addScene(scene, name){
@@ -14,8 +15,9 @@ class SceneManager{
 
     loadScene(name){
         this.activeScene = new Scene();
+        this.activeUIScene = new Scene();
         this.activeSceneName = name;
-        roarengine.mObjectManager.loadScene(this.scenes[name], this.activeScene)
+        roarengine.mObjectManager.loadScene(this.scenes[name], this.activeScene, this.activeUIScene)
         
         
     }

@@ -64,3 +64,19 @@ export class TestRes extends RenderRes2D{
         this.renderlayer = -10;
     }
 }
+
+
+export class TestUIRes extends RenderRes2D{
+    constructor(length, width){
+        let geo = new THREE.PlaneGeometry(length,width);
+        let mat =  new THREE.MeshBasicMaterial({
+                color : 0x0000FF,
+                side : THREE.DoubleSide
+        });
+
+        
+
+        super(geo, mat, new THREE.Mesh(geo, mat) )
+        this.renderlayer = -1;
+    }
+}

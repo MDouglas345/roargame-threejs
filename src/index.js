@@ -81,6 +81,7 @@ function gameloop(timestamp){
     mGameSystem.UpdateGeometries();
     
     mRenderer.render(mSceneManager.activeScene)
+    mRenderer.renderUI(mSceneManager.activeUIScene);
 
     //console.log(elapsed);
 

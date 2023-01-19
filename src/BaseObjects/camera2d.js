@@ -7,7 +7,7 @@ import { Camera2DRes } from "../Renderer/renderres";
 
 
 class Camera2D extends Camera{
-    constructor(frustumSize, width, height){
+    constructor(frustumSize){
         let SCREEN_WIDTH = window.innerWidth;
         let SCREEN_HEIGHT = window.innerHeight;
         let aspect = SCREEN_WIDTH / SCREEN_HEIGHT;

@@ -8,7 +8,7 @@ class ThreeRenderer{
         this.aspect = this.SCREEN_WIDTH / this.SCREEN_HEIGHT;
 
         this.camera = null; //new THREE.OrthographicCamera( 0.5 * this.frustumSize * this.aspect / - 2, 0.5 * this.frustumSize * this.aspect / 2, this.frustumSize / 2, this.frustumSize / - 2, 150, 1000 );
-        
+        this.uicamera = null;
 
         let container = document.createElement( 'div' );
 	    document.body.appendChild( container );
@@ -18,7 +18,7 @@ class ThreeRenderer{
 	    this.renderer.setSize( this.SCREEN_WIDTH, this.SCREEN_HEIGHT );
 	    container.appendChild( this.renderer.domElement );
 
-	    this.renderer.autoClear = true;
+	    this.renderer.autoClear = false;
         this.renderer.setClearColor(new THREE.Color(0x553321));
 
         /*
@@ -30,9 +30,17 @@ class ThreeRenderer{
         
     }
 
+    renderbase(scene, camera){
+        this.renderer.render(scene, camera);
+    }
+
 
     render(scene){
-        this.renderer.render(scene, this.camera.camera)
+        this.renderbase(scene, this.camera.camera)
+    }
+
+    renderUI(scene){
+        this.renderbase(scene, this.uicamera.camera);
     }
 
     bindResize(){
@@ -48,6 +56,7 @@ class ThreeRenderer{
         this.renderer.setSize( this.SCREEN_WIDTH, this.SCREEN_HEIGHT );
 
         this.camera.resize(this.aspect);
+        this.uicamera.resize(this.aspect);
 
         
     }
