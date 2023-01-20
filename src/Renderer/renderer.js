@@ -18,6 +18,11 @@ class ThreeRenderer{
 	    this.renderer.setSize( this.SCREEN_WIDTH, this.SCREEN_HEIGHT );
 	    container.appendChild( this.renderer.domElement );
 
+        
+        document.documentElement.requestFullscreen().catch(error =>{
+            console.log(error.message + " " + error.name);  
+        });
+
 	    this.renderer.autoClear = false;
         this.renderer.setClearColor(new THREE.Color(0x553321));
 
@@ -26,6 +31,8 @@ class ThreeRenderer{
             also might just help overall performance
         */
         this.renderer.sortObjects = false;
+
+        this.sceneUIElements = null;
 
         
     }
@@ -55,8 +62,12 @@ class ThreeRenderer{
 
         this.renderer.setSize( this.SCREEN_WIDTH, this.SCREEN_HEIGHT );
 
-        this.camera.resize(this.aspect);
-        this.uicamera.resize(this.aspect);
+        this.camera.resize(this.aspect, this.camera.frustumSize);
+        this.uicamera.resize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
+
+        this.sceneUIElements.forEach(element => {
+            element.onResize();
+        });
 
         
     }

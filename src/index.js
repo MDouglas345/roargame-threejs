@@ -31,6 +31,32 @@ export const mRenderer = new ThreeRenderer();
 
 
 
+document.addEventListener("keyup", function(event){
+
+  
+    mInputSystem.HandleButtonEvent(event.keyCode, event.type);
+  
+},true);
+
+
+
+document.addEventListener("keydown", function(event){
+
+  
+    mInputSystem.HandleButtonEvent(event.keyCode, event.type);
+    document.documentElement.requestFullscreen().catch(error =>{
+            console.log(error.message + " " + error.name);  
+        });
+  
+},true);
+
+document.addEventListener("mousedown", function(event){
+    document.documentElement.requestFullscreen().catch(error =>{
+            console.log(error.message + " " + error.name);  
+        });
+
+    screen.orientation.lock('landscape');
+}, true);
 
 
 
@@ -42,8 +68,11 @@ init()
 
 function init(){
 
+    const policy = document.permissionsPolicy;
 	
     document.title = AppData.gamename;
+
+    screen.orientation.lock('landscape');
 
     mSceneManager.establishScenes(AppData.scenes)
 

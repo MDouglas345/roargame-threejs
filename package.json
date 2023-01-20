@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/MDouglas345/roargame-threejs#readme",
   "dependencies": {
+    "copy-webpack-plugin": "^11.0.0",
+    "json-loader": "^0.5.7",
     "three": "^0.147.0"
   },
   "devDependencies": {

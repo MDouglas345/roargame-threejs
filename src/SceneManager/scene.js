@@ -39,6 +39,6 @@ export class Scene{
     
 
     createFlatUILayer(){
-        this.UICamera = new Camera2D(200);
+        this.UICamera = new Camera2D(window.innerWidth, window.innerHeight);
     }
 }
