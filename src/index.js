@@ -68,11 +68,11 @@ init()
 
 function init(){
 
-    const policy = document.permissionsPolicy;
+    
 	
     document.title = AppData.gamename;
 
-    screen.orientation.lock('landscape');
+    
 
     mSceneManager.establishScenes(AppData.scenes)
 
