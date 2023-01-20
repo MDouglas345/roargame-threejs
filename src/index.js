@@ -54,6 +54,10 @@ document.addEventListener("mousedown", function(event){
     document.documentElement.requestFullscreen().catch(error =>{
             console.log(error.message + " " + error.name);  
         });
+    
+    document.documentElement.webkitRequestFullscreen();
+
+    webkitRequestFullScreen
 
     screen.orientation.lock('landscape');
 }, true);
