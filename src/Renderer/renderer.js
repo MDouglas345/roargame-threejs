@@ -19,9 +19,7 @@ class ThreeRenderer{
 	    container.appendChild( this.renderer.domElement );
 
         
-        document.documentElement.requestFullscreen().catch(error =>{
-            console.log(error.message + " " + error.name);  
-        });
+        
 
 	    this.renderer.autoClear = false;
         this.renderer.setClearColor(new THREE.Color(0x553321));
