@@ -5,7 +5,7 @@ class GameObject{
     constructor(){
         this.rigidbody = new Rigidbody();
         this.renderres = new NoRes();
-        
+        this.UILayer = false;
     }
 
     Init(){

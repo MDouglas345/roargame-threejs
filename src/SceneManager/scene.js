@@ -2,11 +2,17 @@
     This is an object that holds a reference to a threejs scene and an object structure that contains all objects in that scene
 */
 
+import ThreeRenderer from "../Renderer/renderer";
+import  * as THREE from "three";
+import Camera2D from "../BaseObjects/camera2d";
+
 
 export class Scene{
     constructor(){
         this.layers = []
         this.MainCamera = null;
+        this.UICamera = null;
+        
     }
 
     SetMainCamera(object){
@@ -28,5 +34,11 @@ export class Scene{
             return;
         }
         this.layers[layer].push(object);
+    }
+
+    
+
+    createFlatUILayer(){
+        this.UICamera = new Camera2D(window.innerWidth, window.innerHeight);
     }
 }

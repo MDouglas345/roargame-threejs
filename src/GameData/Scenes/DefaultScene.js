@@ -2,7 +2,10 @@
 import Camera2D from "../../BaseObjects/camera2d";
 import CoordHelper from "../../BaseObjects/coordhelper";
 import Plane2D from "../../BaseObjects/plane2d";
+import UITestObject from "../../BaseObjects/uitestobject";
 import { Scene } from "../../SceneManager/scene";
+import * as util from "../../Utility/utility.js"
+import WorldCamera2D from "../../BaseObjects/worldcamera2d";
 
 
 /*
@@ -44,6 +47,7 @@ import { Scene } from "../../SceneManager/scene";
 */
 
 
+
 export class DefaultScene extends Scene{
     constructor(){
         super();
@@ -54,16 +58,31 @@ export class DefaultScene extends Scene{
         let testobj = new Plane2D(10,10);
         testobj.rigidbody.Pos.X = 0;
 
-        let cam = new Camera2D(200);
+        let uitestobj = new UITestObject(new util.Vec2(30,-100));
+        uitestobj.rigidbody.Pos = new util.Vec2(0,0);
+
+        let worldcam = new WorldCamera2D(500);
     
-
-        let axeshelper = new CoordHelper();
         
+        
+        let planes = [];
 
+        for (let i = 0; i < 1000; i++){
+            planes.push(new Plane2D(util.getRandomFloat(10) + 5, util.getRandomFloat(10) + 5));
+            planes[i].rigidbody.Pos = new util.Vec2(util.getRandomFloat(800) - 400, util.getRandomFloat(200) - 100);
+            planes[i].rigidbody.AngVel = util.getRandomFloat(5) - 2.5;
+            this.addObject(planes[i], 1);
+        }
+        
+        
         this.addObject(testobj, 0);
         //this.addObject(axeshelper, 0);
 
-        this.SetMainCamera(cam);
+        this.SetMainCamera(worldcam);
+
+        this.createFlatUILayer();
+
+        this.addObject(uitestobj, 0);
 
 
 

@@ -34,3 +34,8 @@ Calculating the UV when using the texture atlas :
         The final UV is caluclated as : vUV * unitUV + offsetUV
 
 Reference for screen to world position -> https://stackoverflow.com/questions/34660063/threejs-converting-from-screen-2d-coordinate-to-world-3d-coordinate-on-the-came
+
+joystick -> https://www.npmjs.com/package/nipplejs
+
+
+GUI will be handled within Threejs. The size and position of UI elements will be 
