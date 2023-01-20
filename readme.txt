@@ -39,3 +39,10 @@ joystick -> https://www.npmjs.com/package/nipplejs
 
 
 GUI will be handled within Threejs. The size and position of UI elements will be 
+
+
+
+Personal note : Apple is an ass. Why force accessibility features on everyone when the majority dont use this.
+                Referring to user-scalable=no, no longer works on apple devices ios10+. For some god forsaken reason.
+                CSS alternative required.
+
