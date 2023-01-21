@@ -7,7 +7,7 @@ class ThreeRenderer{
         this.SCREEN_HEIGHT = window.innerHeight;
         this.aspect = this.SCREEN_WIDTH / this.SCREEN_HEIGHT;
 
-        this.camera = null; //new THREE.OrthographicCamera( 0.5 * this.frustumSize * this.aspect / - 2, 0.5 * this.frustumSize * this.aspect / 2, this.frustumSize / 2, this.frustumSize / - 2, 150, 1000 );
+        this.camera = null; 
         this.uicamera = null;
 
         let container = document.createElement( 'div' );
@@ -50,6 +50,7 @@ class ThreeRenderer{
 
     bindResize(){
         window.addEventListener('resize', ()=> this.onResize());
+        window.addEventListener('orientationchange', ()=> this.onResize());
     }
 
 

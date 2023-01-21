@@ -7,12 +7,19 @@ import ObjectManager from './ObjectManager/objectmanager.js';
 import GameSystem  from './GameSystem/gamesystem.js';
 
 import AppData from "./AppData.js";
-import { KeyboardController } from './Controller/KeyboardController';
+import { KeyboardController } from './Controller/keyboardcontroller';
+import JoystickController from './Controller/JoystickController';
 
 
 
 
 
+function isMobile(){
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|MacIntel/i.test(navigator.userAgent) || navigator.userAgent.match(/Mac/) && navigator.maxTouchPoints && navigator.maxTouchPoints > 2) {
+        return true;
+    }
+    return false;
+}
 
 
 
@@ -20,7 +27,7 @@ import { KeyboardController } from './Controller/KeyboardController';
 let prevTime = 0, currentTime;
 
 export const mGameSystem = new GameSystem();
-export const mInputSystem = new KeyboardController();
+export const  mInputSystem =isMobile() ? new JoystickController() : new KeyboardController();
 export const mObjectManager = new ObjectManager();
 export const mSoundSystem = null;
 export const mSceneManager = new SceneManager();
@@ -31,36 +38,9 @@ export const mRenderer = new ThreeRenderer();
 
 
 
-document.addEventListener("keyup", function(event){
-
-  
-    mInputSystem.HandleButtonEvent(event.keyCode, event.type);
-  
-},true);
 
 
 
-document.addEventListener("keydown", function(event){
-
-  
-    mInputSystem.HandleButtonEvent(event.keyCode, event.type);
-    document.documentElement.requestFullscreen().catch(error =>{
-            console.log(error.message + " " + error.name);  
-        });
-  
-},true);
-
-document.addEventListener("mousedown", function(event){
-    document.documentElement.requestFullscreen().catch(error =>{
-            console.log(error.message + " " + error.name);  
-        });
-    
-    document.documentElement.webkitRequestFullscreen();
-
-    webkitRequestFullScreen
-
-    screen.orientation.lock('landscape');
-}, true);
 
 
 
@@ -73,10 +53,10 @@ init()
 function init(){
 
     
-	
+    if (isMobile()){
+        alert("MOBILe");
+    }
     document.title = AppData.gamename;
-
-    
 
     mSceneManager.establishScenes(AppData.scenes)
 
@@ -84,15 +64,7 @@ function init(){
 
     mGameSystem.Init();
 
-    document.addEventListener("keyup", function(event){
-        mInputSystem.HandleButtonEvent(event.keyCode, event.type);
-    },true);
-
-
-
-    document.addEventListener("keydown", function(event){
-        mInputSystem.HandleButtonEvent(event.keyCode, event.type);
-    },true);
+    mInputSystem.Init(AppData.controls);
 
     requestAnimationFrame(gameloop);
 

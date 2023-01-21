@@ -34,7 +34,8 @@ module.exports = {
         open : true,
         hot : true,
         compress : true,
-        historyApiFallback : true
+        historyApiFallback : true,
+        allowedHosts : 'all'
     },
     module :{
 
