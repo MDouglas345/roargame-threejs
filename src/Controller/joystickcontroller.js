@@ -1,5 +1,5 @@
 import nipplejs from 'nipplejs';
-import InputController from './inputcontroller';
+import InputController from './inputcontroller.js';
 import * as roarengine from '../index.js';
 
 
@@ -32,7 +32,7 @@ class JoystickController extends InputController{
                 zone : leftArea ,
                 color : 'black',
                 mode : 'semi',
-                fadeTime : 2000
+                fadeTime : 5
                 
             });
 
@@ -40,7 +40,7 @@ class JoystickController extends InputController{
                 zone : rightArea,   
                 color : 'red',
                 mode : 'semi',
-                fadeTime : 2000
+                fadeTime : 5
             })
         }
         else{

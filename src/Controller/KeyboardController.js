@@ -1,4 +1,4 @@
-import InputController from "./inputcontroller";
+import InputController from "./inputcontroller.js";
 
 /*
   This class handles all input from the keyboard and makes it easily accessible anywhere else.
