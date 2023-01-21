@@ -32,7 +32,8 @@ class JoystickController extends InputController{
                 zone : leftArea ,
                 color : 'black',
                 mode : 'semi',
-                fadeTime : 5
+                fadeTime : 5,
+                catchDistance : 100
                 
             });
 
@@ -40,7 +41,8 @@ class JoystickController extends InputController{
                 zone : rightArea,   
                 color : 'red',
                 mode : 'semi',
-                fadeTime : 5
+                fadeTime : 5,
+                catchDistance : 100
             })
         }
         else{
