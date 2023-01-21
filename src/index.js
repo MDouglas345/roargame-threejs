@@ -8,7 +8,7 @@ import GameSystem  from "./GameSystem/gamesystem.js";
 
 import AppData from "./AppData.js";
 import KeyboardController from './Controller/KeyboardController';
-import JoystickController from './Controller/JoystickController';
+import JoystickController from './Controller/joystickcontroller.js';
 
 
 
