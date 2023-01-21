@@ -4,12 +4,14 @@ import InputController from "./inputcontroller.js";
   This class handles all input from the keyboard and makes it easily accessible anywhere else.
   A simple map that links an easy to use string with its key code value.
 */
-export class KeyboardController extends InputController{
+class KeyboardController extends InputController{
   constructor(){
     super();
     this.KeyStates = [];
     this.KeyMap = new Map();
     this.InitalizeKeys();
+  
+
   }
 
 
@@ -55,3 +57,5 @@ export class KeyboardController extends InputController{
                   */
     }
 }
+
+export default KeyboardController;
