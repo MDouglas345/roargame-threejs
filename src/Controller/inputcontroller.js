@@ -1,4 +1,4 @@
-import { Vec2 } from "../Utility/utility";
+import { Vec2 } from "../Utility/utility.js";
 
 class InputController{
     constructor(){
