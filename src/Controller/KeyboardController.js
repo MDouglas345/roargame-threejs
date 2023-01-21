@@ -1,9 +1,12 @@
+import InputController from "./inputcontroller";
+
 /*
   This class handles all input from the keyboard and makes it easily accessible anywhere else.
   A simple map that links an easy to use string with its key code value.
 */
-export class KeyboardController{
+export class KeyboardController extends InputController{
   constructor(){
+    super();
     this.KeyStates = [];
     this.KeyMap = new Map();
     this.InitalizeKeys();
@@ -28,4 +31,27 @@ export class KeyboardController{
   GetKeyState(key){
     return this.KeyStates[this.KeyMap.get(key)];
   }
+
+  Init(){
+    
+        document.addEventListener("keyup", ()=> this.HandleButtonEvent(event.keyCode, event.type));
+            
+
+        document.addEventListener("keydown", ()=> this.HandleButtonEvent(event.keyCode, event.type));
+            
+
+        document.addEventListener("mousedown", ()=> this.HandleButtonEvent(event.keyCode, event.type));
+          
+
+                  //document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+
+                  /*
+                  document.documentElement.webkitRequestFullscreen().catch(error =>{
+                      console.log(error.message + " " + error.name);  
+                  });
+
+                  screen.orientation.lock('landscape'); // have to be in fullscreen mode first
+
+                  */
+    }
 }

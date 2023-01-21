@@ -12,5 +12,13 @@ export default {
             "name" : "default_scene",
             "scene" : new DefaultScene()
         }
-   ]
+   ],
+   "controls" :{
+        "keyboard" : {
+
+        },
+        "touch" : {
+            "twinstick" : true
+        }
+   }
 }
