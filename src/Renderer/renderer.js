@@ -72,4 +72,4 @@ class ThreeRenderer{
     }
 }
 
-export default ThreeRenderer
+export default ThreeRenderer;
