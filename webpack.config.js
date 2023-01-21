@@ -9,7 +9,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     mode : "development",
-    entry : path.resolve(__dirname, 'src/index.js'),
+    entry : path.resolve(__dirname, './src/index.js'),
     output : {
         path : path.resolve(__dirname, 'dist'),
         filename : "index.js",
@@ -51,7 +51,7 @@ module.exports = {
             title : "Roar",
             filename : "index.html",
             template : "src/template.html",
-            manifest : "src/manifest.json"
+            
         }),
         
     ]

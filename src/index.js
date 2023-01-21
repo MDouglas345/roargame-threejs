@@ -1,10 +1,10 @@
 
 import './styles/main.scss'
 
-import SceneManager from './SceneManager/scenemanager.js';
-import ThreeRenderer from './Renderer/renderer.js';
-import ObjectManager from './ObjectManager/objectmanager.js';
-import GameSystem  from './GameSystem/gamesystem.js';
+import SceneManager from "./SceneManager/scenemanager.js";
+import ThreeRenderer from "./Renderer/renderer.js";
+import ObjectManager from "./ObjectManager/objectmanager.js";
+import GameSystem  from "./GameSystem/gamesystem.js";
 
 import AppData from "./AppData.js";
 import KeyboardController  from "./Controller/keyboardcontroller.js";
