@@ -12,6 +12,12 @@ class InputController{
 
     }
 
+    
+
+    Update(){
+        
+    }
+
 
     getPrimaryDirection(){
        

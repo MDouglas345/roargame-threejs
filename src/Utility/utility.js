@@ -84,7 +84,24 @@ export class Vec2{
     if (mag <= 0){mag = 1;}
     this.Divide(mag);
   }
+  static newFromRadians(rads){
+    return new Vec2(Math.cos(rads), Math.sin(rads));
+  }
+
+  fromRadians(rads){
+    this.X = Math.cos(rads);
+    this.Y = Math.sin(rads);
+  }
+
+  Reset(){
+    this.X = 0;
+    this.Y = 0;
+  }
+
+  
 }
+
+
 
 export function Clamp(source, min, max){
   return Math.min(Math.max(source, min), max);

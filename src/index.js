@@ -10,6 +10,8 @@ import AppData from "./AppData.js";
 import KeyboardController from './Controller/KeyboardController';
 import JoystickController from './Controller/joystickcontroller.js';
 
+import stats
+
 
 
 
@@ -77,9 +79,12 @@ function gameloop(timestamp){
     const elapsed = (timestamp - prevTime)/1000
     // const fps = 1000 / (timestampe - prevTime)
 
+    console.log(elapsed);
+
     prevTime = timestamp
 
-    
+    mInputSystem.Update();
+
     mGameSystem.EarlyUpdate(elapsed);
     mGameSystem.Update(elapsed);
     mGameSystem.LateUpdate(elapsed);
