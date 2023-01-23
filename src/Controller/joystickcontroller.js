@@ -1,6 +1,7 @@
 import nipplejs from 'nipplejs';
 import InputController from "./inputcontroller.js";
 import * as roarengine from "../index.js";
+import { Vec2 } from '../Utility/utility.js';
 
 
 
@@ -27,6 +28,9 @@ class JoystickController extends InputController{
         renderCanvas.appendChild(rightArea);
         renderCanvas.appendChild(leftArea);
 
+
+        var thisObj = this;
+
         if (controlOptions.touch.twinstick){
             this.PrimaryJoystick = nipplejs.create({
                 zone : leftArea ,
@@ -44,9 +48,26 @@ class JoystickController extends InputController{
                 fadeTime : 5,
                 catchDistance : 100
             })
+
+            this.PrimaryJoystick.on('move', function(evt, data){
+                thisObj.PrimaryDirection.fromRadians(data.angle.radian);
+
+            });
+
+            this.SecondaryJoystick.on('move', function(evt, data){
+                thisObj.SecondaryDirection.fromRadians(data.angle.radian);
+
+            });
         }
         else{
-
+            this.PrimaryJoystick = nipplejs.create({
+                zone : renderCanvas ,
+                color : 'black',
+                mode : 'semi',
+                fadeTime : 5,
+                catchDistance : 100
+                
+            });
         }
     }
 
@@ -54,6 +75,10 @@ class JoystickController extends InputController{
         let t = this.PrimaryJoystick;
         this.PrimaryJoystick = this.SecondaryJoystick;
         this.SecondaryJoystick = t;
+    }
+
+    getPrimaryDirection(){
+        return this.PrimaryDirection;
     }
 
 

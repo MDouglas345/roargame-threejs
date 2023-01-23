@@ -1,4 +1,5 @@
 import Camera2D from "./camera2d";
+import * as roarengine from '../index.js'
 
 class WorldCamera2D extends Camera2D{
     constructor(frustrum){
@@ -10,6 +11,8 @@ class WorldCamera2D extends Camera2D{
 
         this.frustumSize = frustrum;
         this.aspect = aspect;
+
+        this.rigidbody.Enable();
     }
 
     resize(aspect = this.aspect, frustrumSize = this.frustumSize){
@@ -18,6 +21,13 @@ class WorldCamera2D extends Camera2D{
         this.camera.top = frustrumSize / 2;
         this.camera.bottom = frustrumSize / -2;
         this.camera.updateProjectionMatrix();
+    }
+
+    Update(elapsed){
+        
+        this.rigidbody.Vel = roarengine.mInputSystem.getPrimaryDirection().rMult(200);
+        //console.log(this.rigidbody.Vel);
+        
     }
 }
 

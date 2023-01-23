@@ -7,8 +7,10 @@ import ObjectManager from "./ObjectManager/objectmanager.js";
 import GameSystem  from "./GameSystem/gamesystem.js";
 
 import AppData from "./AppData.js";
-import KeyboardController from './Controller/KeyboardController';
+import KeyboardController from './Controller/keyboardcontroller.js';
 import JoystickController from './Controller/joystickcontroller.js';
+
+
 
 
 
@@ -77,9 +79,12 @@ function gameloop(timestamp){
     const elapsed = (timestamp - prevTime)/1000
     // const fps = 1000 / (timestampe - prevTime)
 
+    console.log(elapsed);
+
     prevTime = timestamp
 
-    
+    mInputSystem.Update();
+
     mGameSystem.EarlyUpdate(elapsed);
     mGameSystem.Update(elapsed);
     mGameSystem.LateUpdate(elapsed);

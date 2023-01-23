@@ -1,3 +1,4 @@
+import { Vec2 } from "../Utility/utility.js";
 import InputController from "./inputcontroller.js";
 
 /*
@@ -16,10 +17,10 @@ class KeyboardController extends InputController{
 
 
   InitalizeKeys(){
-    this.KeyMap.set('W' , 87);
-    this.KeyMap.set('S' , 83);
-    this.KeyMap.set('A' , 65);
-    this.KeyMap.set('D' , 68);
+    this.KeyMap.set('DirUp' , 87);
+    this.KeyMap.set('DirDown' , 83);
+    this.KeyMap.set('DirLeft' , 65);
+    this.KeyMap.set('DirRight' , 68);
     this.KeyMap.set(' ' , 32);
     this.KeyMap.set('+' , 187)
     this.KeyMap.set('-' , 189)
@@ -32,6 +33,10 @@ class KeyboardController extends InputController{
 
   GetKeyState(key){
     return this.KeyStates[this.KeyMap.get(key)];
+  }
+
+  RemapKey(orig, newKey){
+    this.KeyMap.set(orig, newKey);
   }
 
   Init(){
@@ -56,6 +61,33 @@ class KeyboardController extends InputController{
 
                   */
     }
+
+    getPrimaryDirection(){
+        return this.PrimaryDirection;
+    }
+
+    Update(){
+       var newdir = this.PrimaryDirection;
+       newdir.Reset();
+
+        if (this.GetKeyState('DirUp') == 'keydown'){
+            newdir.Y += 1;
+        }
+        if (this.GetKeyState('DirDown') == 'keydown'){
+            newdir.Y -= 1;
+        }
+        if (this.GetKeyState('DirLeft') == 'keydown'){
+            newdir.X -= 1;
+        }
+        if (this.GetKeyState('DirRight') == 'keydown'){
+            newdir.X += 1;
+
+        }
+
+        newdir.Normalize();
+
+    }
+
 }
 
 export default KeyboardController;

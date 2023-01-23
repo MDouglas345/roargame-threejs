@@ -30,6 +30,8 @@ class Camera2D extends Camera{
         
     }
 
+    
+
     resize(width, length){
         this.camera.left = width / -2;
         this.camera.right = width  / 2;
