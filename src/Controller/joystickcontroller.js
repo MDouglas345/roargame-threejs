@@ -15,7 +15,8 @@ class JoystickController extends InputController{
 
     Init(controlOptions){
         let renderCanvas = roarengine.mRenderer.renderer.domElement.parentElement;
-        renderCanvas.classList.add(["MainJoy"])
+        renderCanvas.classList.add(["MainJoy"]);
+        renderCanvas.classList.add(["unselectable"]);
 
 
         let leftArea = document.createElement("div");
@@ -23,6 +24,9 @@ class JoystickController extends InputController{
 
         leftArea.classList.add(["MinorJoy"]);
         rightArea.classList.add(["MinorJoy2"]);
+
+        leftArea.classList.add(["unselectable"]);
+        rightArea.classList.add(["unselectable"]);
         
 
         renderCanvas.appendChild(rightArea);
@@ -50,14 +54,28 @@ class JoystickController extends InputController{
             })
 
             this.PrimaryJoystick.on('move', function(evt, data){
+                
                 thisObj.PrimaryDirection.fromRadians(data.angle.radian);
 
             });
 
+            this.PrimaryJoystick.on('end', function(evt, data){
+                
+                thisObj.PrimaryDirection.Reset();
+            });
+
             this.SecondaryJoystick.on('move', function(evt, data){
+                
                 thisObj.SecondaryDirection.fromRadians(data.angle.radian);
 
             });
+
+            this.SecondaryJoystick.on('end', function(evt, data){
+                
+                thisObj.PrimaryDirection.Reset();
+            });
+
+
         }
         else{
             this.PrimaryJoystick = nipplejs.create({
@@ -67,6 +85,17 @@ class JoystickController extends InputController{
                 fadeTime : 5,
                 catchDistance : 100
                 
+            });
+
+            this.PrimaryJoystick.on('move', function(evt, data){
+                
+                thisObj.PrimaryDirection.fromRadians(data.angle.radian);
+
+            });
+
+            this.PrimaryJoystick.on('end', function(evt, data){
+                
+                thisObj.PrimaryDirection.Reset();
             });
         }
     }
@@ -79,6 +108,10 @@ class JoystickController extends InputController{
 
     getPrimaryDirection(){
         return this.PrimaryDirection;
+    }
+
+    Update(){
+       
     }
 
 

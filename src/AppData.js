@@ -10,7 +10,7 @@ export default {
    "scenes" : [
         {
             "name" : "default_scene",
-            "scene" : new DefaultScene()
+            "scene" : new DefaultScene(),
         }
    ],
    "controls" :{
@@ -20,5 +20,9 @@ export default {
         "touch" : {
             "twinstick" : true
         }
+   },
+   "render" : {
+        "useInstanced2D" : true,
+        "displayFPS" : true
    }
 };

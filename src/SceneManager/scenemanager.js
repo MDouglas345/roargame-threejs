@@ -7,6 +7,7 @@ class SceneManager{
         this.activeScene = null;
         this.activeSceneName = null;
         this.activeUIScene = null;
+        this.activeSceneSource = null;
     }
 
     addScene(scene, name){
@@ -17,7 +18,8 @@ class SceneManager{
         this.activeScene = new Scene();
         this.activeUIScene = new Scene();
         this.activeSceneName = name;
-        roarengine.mObjectManager.loadScene(this.scenes[name], this.activeScene, this.activeUIScene)
+        this.activeSceneSource = this.scenes[name];
+        roarengine.mObjectManager.loadScene(this.activeSceneSource, this.activeScene, this.activeUIScene)
         
         
     }
@@ -35,7 +37,23 @@ class SceneManager{
         if (this.activeScene != null && this.activeSceneName != null){
             this.loadScene(this.activeSceneName);
         }
-    }   
+    }  
+    
+    resetInstanceInter(){
+        this.activeSceneSource.resetInstancedIters();
+    }
+
+    updateSceneInstances(){
+        this.activeSceneSource.updateInstancedMatrices();
+    }
+
+    preRender(){
+        this.updateSceneInstances();
+    }
+
+    postRender(){
+        this.resetInstanceInter();
+    }
 }
 
 
