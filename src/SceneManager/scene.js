@@ -13,6 +13,9 @@ export class Scene{
         this.MainCamera = null;
         this.UICamera = null;
         
+        this.InstancedMeshes = [];
+        this.InstancedTypes = [];
+
     }
 
     SetMainCamera(object){
@@ -34,6 +37,24 @@ export class Scene{
             return;
         }
         this.layers[layer].push(object);
+    }
+
+    addInstancedMesh(mesh){
+        this.InstancedMeshes.push(mesh.create());
+        this.InstancedTypes.push(mesh);
+    }
+
+    resetInstancedIters(){
+        this.InstancedTypes.forEach((type) => {
+            type.resetIter();
+        });
+    }
+
+    updateInstancedMatrices(){
+        this.InstancedTypes.forEach((type) => {
+            type.updateMatrix();
+        });
+        
     }
 
     

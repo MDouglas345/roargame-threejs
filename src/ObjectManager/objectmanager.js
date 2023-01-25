@@ -20,6 +20,10 @@ class ObjectManager{
         this.layers = []
         var uielements = [];
 
+        objects.InstancedMeshes.forEach((mesh) =>{
+          scene.add(mesh)
+        });
+
 
         objects.layers.forEach((layer) => {
           let newlayer = []

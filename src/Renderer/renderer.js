@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import Stats from 'stats-js';
+
 
 class ThreeRenderer{
     constructor(){
@@ -32,6 +34,10 @@ class ThreeRenderer{
 
         this.sceneUIElements = null;
 
+        this.stats = null;
+
+        
+
         
     }
 
@@ -46,6 +52,8 @@ class ThreeRenderer{
 
     renderUI(scene){
         this.renderbase(scene, this.uicamera.camera);
+        this.stats.update();
+        
     }
 
     bindResize(){
@@ -68,6 +76,25 @@ class ThreeRenderer{
             element.onResize();
         });
 
+        
+    }
+
+    Init(renderOptions){
+        if (renderOptions.useInstanced2D){
+            console.log("instancing enabled");
+
+        }
+
+        if (renderOptions.displayFPS){
+            let stats = new Stats();
+            stats.showPanel(0);
+            stats.domElement.style.cssText = "position:absolute;top:3px;left:3px;";
+            document.body.appendChild(stats.dom);
+
+            this.stats = stats;
+            
+        } 
+        
         
     }
 }
