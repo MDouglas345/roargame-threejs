@@ -61,6 +61,10 @@ function init(){
     
     document.title = AppData.gamename;
 
+    document.ondblclick = function(e) {
+        e.preventDefault();
+    }
+
     mSceneManager.establishScenes(AppData.scenes)
 
     mRenderer.bindResize();
@@ -70,6 +74,8 @@ function init(){
     mInputSystem.Init(AppData.controls);
 
     mRenderer.Init(AppData.render);
+
+    mRenderer.renderer.setAnimationLoop(gameloop);
 
     requestAnimationFrame(gameloop);
 
@@ -102,7 +108,6 @@ function gameloop(timestamp){
 
     //console.log(elapsed);
 
-    requestAnimationFrame(gameloop)
 
 }
 

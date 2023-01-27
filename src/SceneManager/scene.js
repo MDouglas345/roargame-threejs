@@ -57,6 +57,12 @@ export class Scene{
         
     }
 
+    updateInstanceCount(){
+        this.InstancedTypes.forEach((type) => {
+            type.updateCount();
+        });
+    }
+
     
 
     createFlatUILayer(){

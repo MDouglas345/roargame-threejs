@@ -1,8 +1,6 @@
 body {
   margin: 0;
   overflow: hidden;
-  -ms-touch-action: pan-x pan-y;
-      touch-action: pan-x pan-y;
   -ms-touch-action: none;
       touch-action: none;
 }
@@ -12,19 +10,19 @@ body {
 }
 
 .MinorJoy {
-  top: 50%;
+  top: 70%;
   left: 0;
   position: absolute;
   width: 50%;
-  height: 50%;
+  height: 30%;
 }
 
 .MinorJoy2 {
-  top: 50%;
+  top: 70%;
   left: 50%;
   position: absolute;
   width: 50%;
-  height: 50%;
+  height: 30%;
 }
 
 .unselectable {

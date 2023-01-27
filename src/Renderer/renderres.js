@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { Plane } from 'three';
 
 
 class RenderRes{
@@ -129,16 +130,18 @@ export class Plane2DInstancedRes extends RenderRes2DInstanced{
     Update(object){
         let rigid = object.rigidbody;
 
-        this.Position.x = rigid.Pos.X;
-        this.Position.y = rigid.Pos.Y;
-        this.Rotation.z = rigid.Orien;
+        let dummy = Plane2DInstancedRes.dummy;
 
-        this.Quaternion.setFromEuler(this.Rotation);
+        dummy.position.x = rigid.Pos.X;
+        dummy.position.y = rigid.Pos.Y;
+        dummy.position.z = -100;
+        dummy.scale.set(this.Scale.x, this.Scale.y, 1);
+        dummy.rotation.z = rigid.Orien;
 
-        this.Matrix.compose(this.Position, this.Quaternion, this.Scale);
+        dummy.updateMatrix();
 
-        Plane2DInstancedRes.Mesh.setMatrixAt(Plane2DInstancedRes.Iter, this.Matrix);
-        Plane2DInstancedRes.Iter += 1;
+        Plane2DInstancedRes.Mesh.setMatrixAt(Plane2DInstancedRes.Iter ++, dummy.matrix);
+        
     }
 
     static create(){
@@ -161,8 +164,76 @@ export class Plane2DInstancedRes extends RenderRes2DInstanced{
     static updateMatrix(){
         Plane2DInstancedRes.Mesh.instanceMatrix.needsUpdate = true;
     }
+
+    static updateCount(){
+        Plane2DInstancedRes.Mesh.count = Plane2DInstancedRes.count;
+    }
 }
 Plane2DInstancedRes.count = 0;
 Plane2DInstancedRes.MaxCount = 100000;
 Plane2DInstancedRes.Mesh = null;
 Plane2DInstancedRes.Iter = 0;
+Plane2DInstancedRes.dummy = new THREE.Object3D();
+
+
+
+
+export class Sprite2DInstancedRes extends RenderRes2DInstanced{
+    constructor(length){
+        super(-10);
+
+        this.Scale.setX(length);
+        this.Scale.setY(length);
+    }
+
+     addToScene(scene){
+        Sprite2DInstancedRes.count += 1;
+    }
+
+    Update(object){
+        let rigid = object.rigidbody;
+
+        let dummy = Sprite2DInstancedRes.dummy;
+
+        dummy.position.x = rigid.Pos.X;
+        dummy.position.y = rigid.Pos.Y;
+        dummy.position.z = -100;
+        dummy.scale.set(this.Scale.x, this.Scale.y, 1);
+        dummy.rotation.z = rigid.Orien;
+
+        dummy.updateMatrix();
+
+        Plane2DInstancedRes.Mesh.setMatrixAt(Sprite2DInstancedRes.Iter ++, dummy.matrix);
+        
+    }
+
+    static create(){
+        Sprite2DInstancedRes.Mesh = new THREE.InstancedMesh(
+            new THREE.PlaneGeometry(1,1), 
+            new THREE.MeshBasicMaterial({
+                color : 0x00AA00,
+                side : THREE.DoubleSide
+        }), Sprite2DInstancedRes.MaxCount);
+
+        Sprite2DInstancedRes.Mesh.instanceMatrix.setUsage( THREE.DynamicDrawUsage );
+
+        return Sprite2DInstancedRes.Mesh;
+    }
+
+    static resetIter(){
+        Sprite2DInstancedRes.Iter = 0;
+    }
+
+    static updateMatrix(){
+        Sprite2DInstancedRes.Mesh.instanceMatrix.needsUpdate = true;
+    }
+
+    static updateCount(){
+        Sprite2DInstancedRes.Mesh.count = Sprite2DInstancedRes.count;
+    }
+}
+Sprite2DInstancedRes.count = 0;
+Sprite2DInstancedRes.MaxCount = 100000;
+Sprite2DInstancedRes.Mesh = null;
+Sprite2DInstancedRes.Iter = 0;
+Sprite2DInstancedRes.dummy = new THREE.Object3D();
