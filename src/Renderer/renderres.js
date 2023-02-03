@@ -1,5 +1,7 @@
 import * as THREE from 'three';
-import { Plane } from 'three';
+import { getInstancedSpriteMat } from './ShaderMaterials/instancedspritemat';
+import testsprite from '../assets/testsprites.png';
+import TextureLoader from './TextureLoader/textureloader';
 
 
 class RenderRes{
@@ -148,7 +150,7 @@ export class Plane2DInstancedRes extends RenderRes2DInstanced{
         Plane2DInstancedRes.Mesh = new THREE.InstancedMesh(
             new THREE.PlaneGeometry(1,1), 
             new THREE.MeshBasicMaterial({
-                color : 0x00AA00,
+                color : 0xeedd00,
                 side : THREE.DoubleSide
         }), Plane2DInstancedRes.MaxCount);
 
@@ -179,43 +181,48 @@ Plane2DInstancedRes.dummy = new THREE.Object3D();
 
 
 export class Sprite2DInstancedRes extends RenderRes2DInstanced{
-    constructor(length){
+    constructor(length, uvcoords){
         super(-10);
-
+        this.uvcoords = uvcoords;
         this.Scale.setX(length);
         this.Scale.setY(length);
+        this.Euler = new THREE.Euler(0,0,0,'XYZ');
+        this.Quaternion = new THREE.Quaternion();
     }
 
      addToScene(scene){
         Sprite2DInstancedRes.count += 1;
     }
 
-    Update(object){
-        let rigid = object.rigidbody;
-
-        let dummy = Sprite2DInstancedRes.dummy;
-
-        dummy.position.x = rigid.Pos.X;
-        dummy.position.y = rigid.Pos.Y;
-        dummy.position.z = -100;
-        dummy.scale.set(this.Scale.x, this.Scale.y, 1);
-        dummy.rotation.z = rigid.Orien;
-
-        dummy.updateMatrix();
-
-        Plane2DInstancedRes.Mesh.setMatrixAt(Sprite2DInstancedRes.Iter ++, dummy.matrix);
-        
-    }
-
     static create(){
-        Sprite2DInstancedRes.Mesh = new THREE.InstancedMesh(
-            new THREE.PlaneGeometry(1,1), 
-            new THREE.MeshBasicMaterial({
-                color : 0x00AA00,
-                side : THREE.DoubleSide
-        }), Sprite2DInstancedRes.MaxCount);
+        Sprite2DInstancedRes.UVsArray = new Float32Array(Sprite2DInstancedRes.MaxCount * 2);
+        Sprite2DInstancedRes.PositionsArray = new Float32Array(Sprite2DInstancedRes.MaxCount * 3);
+        Sprite2DInstancedRes.OrientationsArray = new Float32Array(Sprite2DInstancedRes.MaxCount * 4);
+        Sprite2DInstancedRes.ScalesArray = new Float32Array(Sprite2DInstancedRes.MaxCount * 3);
 
-        Sprite2DInstancedRes.Mesh.instanceMatrix.setUsage( THREE.DynamicDrawUsage );
+        Sprite2DInstancedRes.UVAttriubutes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.UVsArray, 2);
+        Sprite2DInstancedRes.UVAttriubutes.setUsage(THREE.DynamicDrawUsage);
+
+        Sprite2DInstancedRes.PositionsAttributes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.PositionsArray, 3);
+        Sprite2DInstancedRes.PositionsAttributes.setUsage(THREE.DynamicDrawUsage);
+
+        Sprite2DInstancedRes.OrientationsAttributes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.OrientationsArray, 4);
+        Sprite2DInstancedRes.OrientationsAttributes.setUsage(THREE.DynamicDrawUsage);
+
+        Sprite2DInstancedRes.ScalesAttributes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.ScalesArray, 3);
+        Sprite2DInstancedRes.ScalesAttributes.setUsage(THREE.DynamicDrawUsage);
+
+        Sprite2DInstancedRes.Geometry = new THREE.InstancedBufferGeometry().copy( new THREE.PlaneGeometry(1,1) );
+
+        Sprite2DInstancedRes.Geometry.boundingSphere = new THREE.Sphere( new THREE.Vector3(), 30000 );
+
+        Sprite2DInstancedRes.Sprite = new TextureLoader(testsprite, 608, 1216, 16,16);
+
+        Sprite2DInstancedRes.Mesh = new THREE.Mesh(
+            Sprite2DInstancedRes.Geometry,
+            getInstancedSpriteMat(Sprite2DInstancedRes.Sprite.getTexture())
+  
+        );
 
         return Sprite2DInstancedRes.Mesh;
     }
@@ -225,15 +232,68 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
     }
 
     static updateMatrix(){
-        Sprite2DInstancedRes.Mesh.instanceMatrix.needsUpdate = true;
+        Sprite2DInstancedRes.Geometry.setAttribute("subUV", Sprite2DInstancedRes.UVAttriubutes);
+        Sprite2DInstancedRes.Geometry.setAttribute("pos", Sprite2DInstancedRes.PositionsAttributes);
+        Sprite2DInstancedRes.Geometry.setAttribute("orientation", Sprite2DInstancedRes.OrientationsAttributes);
+        Sprite2DInstancedRes.Geometry.setAttribute("scale", Sprite2DInstancedRes.ScalesAttributes);
     }
+        
 
     static updateCount(){
-        Sprite2DInstancedRes.Mesh.count = Sprite2DInstancedRes.count;
+        Sprite2DInstancedRes.Geometry.maxInstancedCount = 1;
+        Sprite2DInstancedRes.Geometry.instanceCount = Sprite2DInstancedRes.count
+    }
+
+    Update(object){
+        let rigid = object.rigidbody;
+        let iter = Sprite2DInstancedRes.Iter;
+
+        //the static tVec<x> maybe a bad approach, give every renderres its own tvec<x> to use per instance.
+
+        //tVec3.set(rigid.Pos.X,rigid.Pos.Y,-100);
+        let posIter = iter * 3;
+        Sprite2DInstancedRes.PositionsArray[posIter] = rigid.Pos.X;
+        Sprite2DInstancedRes.PositionsArray[posIter+1] = rigid.Pos.Y;
+        Sprite2DInstancedRes.PositionsArray[posIter+2] = -100;
+
+
+        //tVec3.set(this.Scale.X,this.Scale.Y,1);
+        
+        Sprite2DInstancedRes.ScalesArray[posIter] = this.Scale.x;
+        Sprite2DInstancedRes.ScalesArray[posIter+1] = this.Scale.y;
+        Sprite2DInstancedRes.ScalesArray[posIter+2] = 1;
+
+        //tVec4.set(0,0, rigid.Orien ,1);
+        let orIter = iter * 4;
+        this.Euler.z = rigid.Orien;
+        this.Quaternion.setFromEuler(this.Euler);
+        Sprite2DInstancedRes.OrientationsArray[orIter] = this.Quaternion.x;
+        Sprite2DInstancedRes.OrientationsArray[orIter+1] = this.Quaternion.y;
+        Sprite2DInstancedRes.OrientationsArray[orIter+2] = this.Quaternion.z;
+        Sprite2DInstancedRes.OrientationsArray[orIter+3] = this.Quaternion.w;
+
+        let uvIter = iter * 2
+        
+        Sprite2DInstancedRes.UVsArray[uvIter] = this.uvcoords.X;
+        Sprite2DInstancedRes.UVsArray[uvIter+1] = this.uvcoords.Y;
+
+        Sprite2DInstancedRes.Iter += 1;
+       
     }
 }
 Sprite2DInstancedRes.count = 0;
 Sprite2DInstancedRes.MaxCount = 100000;
 Sprite2DInstancedRes.Mesh = null;
 Sprite2DInstancedRes.Iter = 0;
-Sprite2DInstancedRes.dummy = new THREE.Object3D();
+
+Sprite2DInstancedRes.UVAttriubutes = null;
+Sprite2DInstancedRes.PositionsAttributes = null;
+Sprite2DInstancedRes.OrientationsAttributes = null;
+Sprite2DInstancedRes.ScalesAttributes = null;
+
+Sprite2DInstancedRes.UVsArray = null;
+Sprite2DInstancedRes.PositionsArray = null;
+Sprite2DInstancedRes.OrientationsArray = null;
+Sprite2DInstancedRes.ScalesArray = null;
+Sprite2DInstancedRes.Geometry = null;
+Sprite2DInstancedRes.Sprite = null;
