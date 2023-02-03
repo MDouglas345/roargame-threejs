@@ -1,13 +1,13 @@
 import GameObject from "./gameobject";
-import { TestRes, Sprite2DInstancedRes } from "../Renderer/renderres";
+import { Sprite2DInstancedRes } from "../Renderer/renderres";
 import { Vec2 } from "../Utility/utility";
 
 
-class Plane2D extends GameObject{
+class Sprite2D extends GameObject{
     constructor(length, width){
         super();
         
-        this.renderres = new TestRes(length,width);
+        this.renderres = new Sprite2DInstancedRes(length, new Vec2(0,0));
         
         
     }
@@ -18,4 +18,4 @@ class Plane2D extends GameObject{
     }
 }
 
-export default Plane2D;
+export default Sprite2D;

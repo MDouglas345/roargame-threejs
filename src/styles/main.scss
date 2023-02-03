@@ -3,7 +3,6 @@
 body{
     margin : 0;
     overflow: hidden;
-    touch-action: pan-x pan-y;
     touch-action: none;
 }
 
@@ -11,14 +10,16 @@ body{
     position: relative;
     
     
+    
 }
 
 .MinorJoy{
-    top: 50%;
+    top: 40%;
     left: 0;
     position: absolute;
     width: 50%;
-    height: 50%;
+    height: 60%;
+    
 
     
 
@@ -26,12 +27,12 @@ body{
 }
 
 .MinorJoy2{
-    top: 50%;
+    top: 60%;
     left: 50%;
     position: absolute;
     width: 50%;
-    height: 50%;
-
+    height: 40%;
+    
     
 
 }

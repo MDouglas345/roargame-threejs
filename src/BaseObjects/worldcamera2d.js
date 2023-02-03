@@ -25,7 +25,8 @@ class WorldCamera2D extends Camera2D{
 
     Update(elapsed){
         
-        this.rigidbody.Vel = roarengine.mInputSystem.getPrimaryDirection().rMult(200);
+        this.rigidbody.Vel = roarengine.mInputSystem.getPrimaryDirection().rMult(100);
+        
         //console.log(this.rigidbody.Vel);
         
     }

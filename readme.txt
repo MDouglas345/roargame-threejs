@@ -46,3 +46,13 @@ Personal note : Apple is an ass. Why force accessibility features on everyone wh
                 Referring to user-scalable=no, no longer works on apple devices ios10+. For some god forsaken reason.
                 CSS alternative required.
 
+offload transformation to the cpu when instancing, greatly improves performance and load off the cpu : https://alteredqualia.com/three/examples/webgl_cubes.html
+or this for no InstanceMesh assistance : https://github.com/mrdoob/three.js/blob/master/examples/webgl_buffergeometry_instancing.html
+
+
+source for spritetest1 : https://www.spriters-resource.com/fullview/190523/
+
+
+ughhhh : https://velasquezdaniel.com/blog/rendering-100k-spheres-instantianing-and-draw-calls/
+https://github.com/Anemolo/100k-objects-with-Instanced-Geometries/blob/master/src/spheres.js
+

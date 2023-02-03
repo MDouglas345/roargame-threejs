@@ -49,6 +49,7 @@ class SceneManager{
 
     preRender(){
         this.updateSceneInstances();
+        this.activeSceneSource.updateInstanceCount();
     }
 
     postRender(){
