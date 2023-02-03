@@ -52,3 +52,7 @@ or this for no InstanceMesh assistance : https://github.com/mrdoob/three.js/blob
 
 source for spritetest1 : https://www.spriters-resource.com/fullview/190523/
 
+
+ughhhh : https://velasquezdaniel.com/blog/rendering-100k-spheres-instantianing-and-draw-calls/
+https://github.com/Anemolo/100k-objects-with-Instanced-Geometries/blob/master/src/spheres.js
+

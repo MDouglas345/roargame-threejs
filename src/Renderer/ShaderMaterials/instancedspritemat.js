@@ -4,27 +4,45 @@ import * as THREE from 'three';
 export function getInstancedSpriteMat(texture){
     return new THREE.ShaderMaterial( {
 
-        uniforms : {
-            spritesheet : { value : texture}
-        },
+        
         vertexShader : `
-
+            #define PI 3.14159
             attribute vec2 subUV;
             attribute vec3 pos;
             attribute vec3 scale;
-            attribute vec4 orientation;
+            attribute float angle;
 
             varying vec2 vertexUV;
-            varying vec3 vPosition;
+            
 
+
+            vec3 rotatePoint(vec3 pos1, float angle1, vec3 scale1, vec3 offset1){
+                vec3 tPos = pos1 * scale1;
+                
+                //angle1 = angle1 * (PI/180.);
+
+                float x = tPos.x;
+                float y = tPos.y;
+
+                float cosAngle = cos(angle1);
+                float sinAngle = sin(angle1);
+
+                tPos.x = (x * cosAngle) - (y * sinAngle);
+                tPos.y = (y * cosAngle) + (x * sinAngle);
+
+
+                tPos += offset1;
+
+                return tPos;
+            }
             
 
             void main() {
-                vPosition = pos + (position * scale);
-                vec3 vcV = cross( orientation.xyz, vPosition );
-                vPosition = vcV * ( 2.0 * orientation.w ) + ( cross( orientation.xyz, vcV ) * 2.0 + vPosition );
-                vertexUV = uv + subUV;
+
+                vertexUV = uv;
+                vec3 vPosition = rotatePoint(position, angle, scale, pos);
 			    gl_Position = projectionMatrix * modelViewMatrix * vec4( vPosition, 1.0 );
+                
 
             }
         `,
@@ -34,17 +52,21 @@ export function getInstancedSpriteMat(texture){
             uniform sampler2D spritesheet;
 
             varying vec2 vertexUV;
-            varying vec3 vPosition;
+            
             
 
             void main() {
 
-                //gl_FragColor = texture2D(spritesheet, vertexUV);
-                gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+                gl_FragColor = vec4(texture2D(spritesheet, vertexUV));
+                 
+                //gl_FragColor = vec4(vertexUV.x, vertexUV.y, 0.0, 1.0);
 
             }
 
         `,
-        side : THREE.DoubleSide
+        side : THREE.DoubleSide,
+        uniforms : {
+            spritesheet : { value : texture}
+        },
     });
 }

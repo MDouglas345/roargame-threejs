@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { getInstancedSpriteMat } from './ShaderMaterials/instancedspritemat';
 import testsprite from '../assets/testsprites.png';
+import roarstar from "../assets/star.png";
 import TextureLoader from './TextureLoader/textureloader';
 
 
@@ -197,7 +198,7 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
     static create(){
         Sprite2DInstancedRes.UVsArray = new Float32Array(Sprite2DInstancedRes.MaxCount * 2);
         Sprite2DInstancedRes.PositionsArray = new Float32Array(Sprite2DInstancedRes.MaxCount * 3);
-        Sprite2DInstancedRes.OrientationsArray = new Float32Array(Sprite2DInstancedRes.MaxCount * 4);
+        Sprite2DInstancedRes.OrientationsArray = new Float32Array(Sprite2DInstancedRes.MaxCount);
         Sprite2DInstancedRes.ScalesArray = new Float32Array(Sprite2DInstancedRes.MaxCount * 3);
 
         Sprite2DInstancedRes.UVAttriubutes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.UVsArray, 2);
@@ -206,7 +207,7 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
         Sprite2DInstancedRes.PositionsAttributes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.PositionsArray, 3);
         Sprite2DInstancedRes.PositionsAttributes.setUsage(THREE.DynamicDrawUsage);
 
-        Sprite2DInstancedRes.OrientationsAttributes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.OrientationsArray, 4);
+        Sprite2DInstancedRes.OrientationsAttributes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.OrientationsArray, 1);
         Sprite2DInstancedRes.OrientationsAttributes.setUsage(THREE.DynamicDrawUsage);
 
         Sprite2DInstancedRes.ScalesAttributes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.ScalesArray, 3);
@@ -216,13 +217,23 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
 
         Sprite2DInstancedRes.Geometry.boundingSphere = new THREE.Sphere( new THREE.Vector3(), 30000 );
 
-        Sprite2DInstancedRes.Sprite = new TextureLoader(testsprite, 608, 1216, 16,16);
+        Sprite2DInstancedRes.Sprite = new TextureLoader(roarstar, 608, 1216, 16,16);
+
+        Sprite2DInstancedRes.Material = getInstancedSpriteMat(Sprite2DInstancedRes.Sprite.getTexture());
+        
 
         Sprite2DInstancedRes.Mesh = new THREE.Mesh(
             Sprite2DInstancedRes.Geometry,
-            getInstancedSpriteMat(Sprite2DInstancedRes.Sprite.getTexture())
+            Sprite2DInstancedRes.Material
   
         );
+
+        Sprite2DInstancedRes.Material.needsUpdate = true;
+
+        Sprite2DInstancedRes.Geometry.setAttribute("subUV", Sprite2DInstancedRes.UVAttriubutes);
+        Sprite2DInstancedRes.Geometry.setAttribute("pos", Sprite2DInstancedRes.PositionsAttributes);
+        Sprite2DInstancedRes.Geometry.setAttribute("angle", Sprite2DInstancedRes.OrientationsAttributes);
+        Sprite2DInstancedRes.Geometry.setAttribute("scale", Sprite2DInstancedRes.ScalesAttributes);
 
         return Sprite2DInstancedRes.Mesh;
     }
@@ -232,10 +243,10 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
     }
 
     static updateMatrix(){
-        Sprite2DInstancedRes.Geometry.setAttribute("subUV", Sprite2DInstancedRes.UVAttriubutes);
-        Sprite2DInstancedRes.Geometry.setAttribute("pos", Sprite2DInstancedRes.PositionsAttributes);
-        Sprite2DInstancedRes.Geometry.setAttribute("orientation", Sprite2DInstancedRes.OrientationsAttributes);
-        Sprite2DInstancedRes.Geometry.setAttribute("scale", Sprite2DInstancedRes.ScalesAttributes);
+        Sprite2DInstancedRes.Geometry.attributes.subUV.needsUpdate = true;
+        Sprite2DInstancedRes.Geometry.attributes.pos.needsUpdate = true;
+        Sprite2DInstancedRes.Geometry.attributes.angle.needsUpdate = true;
+        Sprite2DInstancedRes.Geometry.attributes.scale.needsUpdate = true;
     }
         
 
@@ -264,13 +275,15 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
         Sprite2DInstancedRes.ScalesArray[posIter+2] = 1;
 
         //tVec4.set(0,0, rigid.Orien ,1);
-        let orIter = iter * 4;
-        this.Euler.z = rigid.Orien;
-        this.Quaternion.setFromEuler(this.Euler);
-        Sprite2DInstancedRes.OrientationsArray[orIter] = this.Quaternion.x;
-        Sprite2DInstancedRes.OrientationsArray[orIter+1] = this.Quaternion.y;
-        Sprite2DInstancedRes.OrientationsArray[orIter+2] = this.Quaternion.z;
-        Sprite2DInstancedRes.OrientationsArray[orIter+3] = this.Quaternion.w;
+        //let orIter = iter * 4;
+        //this.Euler.z = rigid.Orien;
+        //this.Quaternion.setFromEuler(this.Euler);
+        //Sprite2DInstancedRes.OrientationsArray[orIter] = this.Quaternion.x;
+        //Sprite2DInstancedRes.OrientationsArray[orIter+1] = this.Quaternion.y;
+        //Sprite2DInstancedRes.OrientationsArray[orIter+2] = this.Quaternion.z;
+        //Sprite2DInstancedRes.OrientationsArray[orIter+3] = this.Quaternion.w;
+
+        Sprite2DInstancedRes.OrientationsArray[iter] = rigid.Orien;
 
         let uvIter = iter * 2
         
@@ -297,3 +310,5 @@ Sprite2DInstancedRes.OrientationsArray = null;
 Sprite2DInstancedRes.ScalesArray = null;
 Sprite2DInstancedRes.Geometry = null;
 Sprite2DInstancedRes.Sprite = null;
+Sprite2DInstancedRes.Material = null;
+

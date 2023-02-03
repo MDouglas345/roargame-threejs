@@ -71,11 +71,11 @@ export class DefaultScene extends Scene{
         
         let planes = [];
 
-        for (let i = 0; i < 5000; i++){
-            planes.push(new Sprite2D(util.getRandomFloat(10) + 5, util.getRandomFloat(10) + 5));
-            planes[i].rigidbody.Pos = new util.Vec2(util.getRandomFloat(2000) - 1000, util.getRandomFloat(2000) - 1000);
-            planes[i].rigidbody.AngVel = util.getRandomFloat(30) - 15;
-            planes[i].rigidbody.Vel = new util.Vec2(4,0);
+        for (let i = 0; i < 16000; i++){
+            planes.push(new Sprite2D(util.getRandomFloat(30) + 15, util.getRandomFloat(30) + 15));
+            planes[i].rigidbody.Pos = new util.Vec2(util.getRandomFloat(5000) - 2500, util.getRandomFloat(5000) - 2500);
+            planes[i].rigidbody.AngVel = util.getRandomFloat(10) - 5;
+            //planes[i].rigidbody.Vel = new util.Vec2(4,0);
             this.addObject(planes[i], 1);
         }
         
