@@ -220,6 +220,8 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
         Sprite2DInstancedRes.Sprite = new TextureLoader(roarstar, 608, 1216, 16,16);
 
         Sprite2DInstancedRes.Material = getInstancedSpriteMat(Sprite2DInstancedRes.Sprite.getTexture());
+
+        Sprite2DInstancedRes.Material.transparent = true;
         
 
         Sprite2DInstancedRes.Mesh = new THREE.Mesh(
