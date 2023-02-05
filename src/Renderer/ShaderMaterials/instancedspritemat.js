@@ -42,10 +42,10 @@ export function getInstancedSpriteMat(texture){
                 //vec3 vPosition = rotatePoint(position, angle, scale, pos);
 			    //gl_Position = projectionMatrix * modelViewMatrix * vec4( vPosition, 1.0 );
 
-                //vec2 tex = vec2(TextureDetails.x / TextureDetails.z, TextureDetails.y / TextureDetails.w);
+                vec2 tex = vec2(TextureDetails.x / TextureDetails.z, TextureDetails.y / TextureDetails.w) / TextureDetails.xy;
 
-                //vertexUV = uv * tex ;
-                vertexUV = uv;
+                vertexUV = uv * tex + (vec2(SubUVwPos.x / TextureDetails.z , SubUVwPos.y / TextureDetails.w));
+                //vertexUV = uv;
 
                 vec3 vPosition = rotatePoint(position, OrienwScale.x, vec3(OrienwScale.yz,1), vec3(SubUVwPos.zw,-100));
                 gl_Position = projectionMatrix * modelViewMatrix * vec4( vPosition, 1.0 );

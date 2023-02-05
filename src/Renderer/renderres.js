@@ -2,7 +2,8 @@ import * as THREE from 'three';
 import { getInstancedSpriteMat } from './ShaderMaterials/instancedspritemat';
 import testsprite from '../assets/testsprites.png';
 import roarstar from "../assets/star.png";
-import TextureLoader from './TextureLoader/textureloader';
+import astroid from "../assets/astroid1.png";
+import {UniformSpriteTextureLoader} from './TextureLoader/textureloader';
 import { Sprite } from 'three';
 
 
@@ -186,10 +187,16 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
     constructor(length, uvcoords){
         super(-10);
         this.uvcoords = uvcoords;
+
         this.Scale.setX(length);
         this.Scale.setY(length);
         this.Euler = new THREE.Euler(0,0,0,'XYZ');
         this.Quaternion = new THREE.Quaternion();
+
+        this.framespeed = 6;
+        this.framecount = 0;
+
+        
     }
 
      addToScene(scene){
@@ -219,7 +226,8 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
 
         Sprite2DInstancedRes.Geometry.boundingSphere = new THREE.Sphere( new THREE.Vector3(), 30000 );
 
-        Sprite2DInstancedRes.Sprite = new TextureLoader(roarstar, 608, 1216, 16,16);
+        Sprite2DInstancedRes.Sprite = new UniformSpriteTextureLoader(astroid, 2160, 216, 10,1);
+
         Sprite2DInstancedRes.Sprite.setAttribute(Sprite2DInstancedRes.TextureDetailsArray, 4);
 
         Sprite2DInstancedRes.Material = getInstancedSpriteMat(Sprite2DInstancedRes.Sprite.getTexture());
@@ -270,6 +278,14 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
         Sprite2DInstancedRes.OrienwScaleArray[orscaleIter] = rigid.Orien;
         Sprite2DInstancedRes.OrienwScaleArray[orscaleIter+1] = this.Scale.x;
         Sprite2DInstancedRes.OrienwScaleArray[orscaleIter+2] = this.Scale.y;
+
+
+        if (this.framecount > this.framespeed){
+            this.uvcoords.X += 1;
+            this.uvcoords.X %= (Sprite2DInstancedRes.Sprite.numOfSubTexX); 
+            this.framecount = 0;
+        }
+        this.framecount += 1;
 
         Sprite2DInstancedRes.Iter += 1;
        
