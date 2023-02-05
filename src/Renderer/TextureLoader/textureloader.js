@@ -21,8 +21,8 @@ class TextureLoader{
 
         this.width = imgwidth;
         this.height = imgheight;
-        this.subwidth = subimgwidth;
-        this.subheight = subimgheight;
+        this.numOfSubTexX = subimgwidth;
+        this.numOfSubTexY = subimgheight;
     }
 
     getTexture(){
@@ -37,12 +37,16 @@ class TextureLoader{
         return this.height;
     }
 
-    getSubWidth(){
-        return this.subwidth;
-    }
 
-    getSubHeight(){
-        return this.subheight;
+    setAttribute(array, verticies){
+        for (let i = 0; i < verticies; i++){
+            let iter = i * 4;
+            array[iter] = this.width;
+            array[iter+1] = this.height;
+            array[iter+2] = this.numOfSubTexX;
+            array[iter+3] = this.numOfSubTexY;
+
+        }
     }
 }
 TextureLoader.loader = new THREE.TextureLoader();
