@@ -228,6 +228,7 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
         Sprite2DInstancedRes.Geometry.boundingSphere = new THREE.Sphere( new THREE.Vector3(), 30000 );
 
         Sprite2DInstancedRes.Sprite = new UniformSpriteTextureLoader(planet, 5000, 100, 50,1);
+        
 
         Sprite2DInstancedRes.Sprite.setAttribute(Sprite2DInstancedRes.TextureDetailsArray, 4);
 
