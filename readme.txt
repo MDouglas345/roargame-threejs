@@ -56,3 +56,6 @@ source for spritetest1 : https://www.spriters-resource.com/fullview/190523/
 ughhhh : https://velasquezdaniel.com/blog/rendering-100k-spheres-instantianing-and-draw-calls/
 https://github.com/Anemolo/100k-objects-with-Instanced-Geometries/blob/master/src/spheres.js
 
+
+spritesheet problem that I overlooked : https://gamedev.stackexchange.com/questions/22772/how-can-i-handle-sprite-sheets-with-nonuniform-sprite-dimensions
+

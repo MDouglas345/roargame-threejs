@@ -2,7 +2,9 @@ import * as THREE from 'three';
 import { getInstancedSpriteMat } from './ShaderMaterials/instancedspritemat';
 import testsprite from '../assets/testsprites.png';
 import roarstar from "../assets/star.png";
-import TextureLoader from './TextureLoader/textureloader';
+import astroid from "../assets/astroid1.png";
+import {UniformSpriteTextureLoader} from './TextureLoader/textureloader';
+import { Sprite } from 'three';
 
 
 class RenderRes{
@@ -185,10 +187,16 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
     constructor(length, uvcoords){
         super(-10);
         this.uvcoords = uvcoords;
+
         this.Scale.setX(length);
         this.Scale.setY(length);
         this.Euler = new THREE.Euler(0,0,0,'XYZ');
         this.Quaternion = new THREE.Quaternion();
+
+        this.framespeed = 6;
+        this.framecount = 0;
+
+        
     }
 
      addToScene(scene){
@@ -196,33 +204,37 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
     }
 
     static create(){
-        Sprite2DInstancedRes.UVsArray = new Float32Array(Sprite2DInstancedRes.MaxCount * 2);
-        Sprite2DInstancedRes.PositionsArray = new Float32Array(Sprite2DInstancedRes.MaxCount * 3);
-        Sprite2DInstancedRes.OrientationsArray = new Float32Array(Sprite2DInstancedRes.MaxCount);
-        Sprite2DInstancedRes.ScalesArray = new Float32Array(Sprite2DInstancedRes.MaxCount * 3);
 
-        Sprite2DInstancedRes.UVAttriubutes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.UVsArray, 2);
-        Sprite2DInstancedRes.UVAttriubutes.setUsage(THREE.DynamicDrawUsage);
 
-        Sprite2DInstancedRes.PositionsAttributes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.PositionsArray, 3);
-        Sprite2DInstancedRes.PositionsAttributes.setUsage(THREE.DynamicDrawUsage);
 
-        Sprite2DInstancedRes.OrientationsAttributes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.OrientationsArray, 1);
-        Sprite2DInstancedRes.OrientationsAttributes.setUsage(THREE.DynamicDrawUsage);
+        Sprite2DInstancedRes.SubUVwPositionArray = new Float32Array(Sprite2DInstancedRes.MaxCount * 4);
+        Sprite2DInstancedRes.OrienwScaleArray = new Float32Array(Sprite2DInstancedRes.MaxCount * 3);
+        Sprite2DInstancedRes.TextureDetailsArray = new Float32Array(4*4);
 
-        Sprite2DInstancedRes.ScalesAttributes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.ScalesArray, 3);
-        Sprite2DInstancedRes.ScalesAttributes.setUsage(THREE.DynamicDrawUsage);
+        Sprite2DInstancedRes.TextureDetailsAttributes = new THREE.BufferAttribute(Sprite2DInstancedRes.TextureDetailsArray,4);
+        Sprite2DInstancedRes.TextureDetailsAttributes.setUsage(THREE.DynamicDrawUsage);
+
+        Sprite2DInstancedRes.SubUVwPositionAttributes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.SubUVwPositionArray, 4);
+        Sprite2DInstancedRes.SubUVwPositionAttributes.setUsage(THREE.DynamicDrawUsage);
+
+        Sprite2DInstancedRes.OrienwScaleAttributes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.OrienwScaleArray, 3);
+        Sprite2DInstancedRes.OrienwScaleAttributes.setUsage(THREE.DynamicDrawUsage);
+
+
 
         Sprite2DInstancedRes.Geometry = new THREE.InstancedBufferGeometry().copy( new THREE.PlaneGeometry(1,1) );
 
         Sprite2DInstancedRes.Geometry.boundingSphere = new THREE.Sphere( new THREE.Vector3(), 30000 );
 
-        Sprite2DInstancedRes.Sprite = new TextureLoader(roarstar, 608, 1216, 16,16);
+        Sprite2DInstancedRes.Sprite = new UniformSpriteTextureLoader(astroid, 2160, 216, 10,1);
+
+        Sprite2DInstancedRes.Sprite.setAttribute(Sprite2DInstancedRes.TextureDetailsArray, 4);
 
         Sprite2DInstancedRes.Material = getInstancedSpriteMat(Sprite2DInstancedRes.Sprite.getTexture());
 
         Sprite2DInstancedRes.Material.transparent = true;
-        
+
+
 
         Sprite2DInstancedRes.Mesh = new THREE.Mesh(
             Sprite2DInstancedRes.Geometry,
@@ -232,10 +244,9 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
 
         Sprite2DInstancedRes.Material.needsUpdate = true;
 
-        Sprite2DInstancedRes.Geometry.setAttribute("subUV", Sprite2DInstancedRes.UVAttriubutes);
-        Sprite2DInstancedRes.Geometry.setAttribute("pos", Sprite2DInstancedRes.PositionsAttributes);
-        Sprite2DInstancedRes.Geometry.setAttribute("angle", Sprite2DInstancedRes.OrientationsAttributes);
-        Sprite2DInstancedRes.Geometry.setAttribute("scale", Sprite2DInstancedRes.ScalesAttributes);
+        Sprite2DInstancedRes.Geometry.setAttribute("TextureDetails", Sprite2DInstancedRes.TextureDetailsAttributes);
+        Sprite2DInstancedRes.Geometry.setAttribute("SubUVwPos", Sprite2DInstancedRes.SubUVwPositionAttributes);
+        Sprite2DInstancedRes.Geometry.setAttribute("OrienwScale", Sprite2DInstancedRes.OrienwScaleAttributes);
 
         return Sprite2DInstancedRes.Mesh;
     }
@@ -245,10 +256,9 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
     }
 
     static updateMatrix(){
-        Sprite2DInstancedRes.Geometry.attributes.subUV.needsUpdate = true;
-        Sprite2DInstancedRes.Geometry.attributes.pos.needsUpdate = true;
-        Sprite2DInstancedRes.Geometry.attributes.angle.needsUpdate = true;
-        Sprite2DInstancedRes.Geometry.attributes.scale.needsUpdate = true;
+        Sprite2DInstancedRes.Geometry.attributes.SubUVwPos.needsUpdate = true;
+        Sprite2DInstancedRes.Geometry.attributes.OrienwScale.needsUpdate = true;
+        
     }
         
 
@@ -261,36 +271,24 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
         let rigid = object.rigidbody;
         let iter = Sprite2DInstancedRes.Iter;
 
-        //the static tVec<x> maybe a bad approach, give every renderres its own tvec<x> to use per instance.
+        let uvposIter = iter * 4;
+        Sprite2DInstancedRes.SubUVwPositionArray[uvposIter] = this.uvcoords.X;
+        Sprite2DInstancedRes.SubUVwPositionArray[uvposIter+1] = this.uvcoords.Y;
+        Sprite2DInstancedRes.SubUVwPositionArray[uvposIter+2] = rigid.Pos.X;
+        Sprite2DInstancedRes.SubUVwPositionArray[uvposIter+3] = rigid.Pos.Y;
 
-        //tVec3.set(rigid.Pos.X,rigid.Pos.Y,-100);
-        let posIter = iter * 3;
-        Sprite2DInstancedRes.PositionsArray[posIter] = rigid.Pos.X;
-        Sprite2DInstancedRes.PositionsArray[posIter+1] = rigid.Pos.Y;
-        Sprite2DInstancedRes.PositionsArray[posIter+2] = -100;
+        let orscaleIter = iter * 3;
+        Sprite2DInstancedRes.OrienwScaleArray[orscaleIter] = rigid.Orien;
+        Sprite2DInstancedRes.OrienwScaleArray[orscaleIter+1] = this.Scale.x;
+        Sprite2DInstancedRes.OrienwScaleArray[orscaleIter+2] = this.Scale.y;
 
 
-        //tVec3.set(this.Scale.X,this.Scale.Y,1);
-        
-        Sprite2DInstancedRes.ScalesArray[posIter] = this.Scale.x;
-        Sprite2DInstancedRes.ScalesArray[posIter+1] = this.Scale.y;
-        Sprite2DInstancedRes.ScalesArray[posIter+2] = 1;
-
-        //tVec4.set(0,0, rigid.Orien ,1);
-        //let orIter = iter * 4;
-        //this.Euler.z = rigid.Orien;
-        //this.Quaternion.setFromEuler(this.Euler);
-        //Sprite2DInstancedRes.OrientationsArray[orIter] = this.Quaternion.x;
-        //Sprite2DInstancedRes.OrientationsArray[orIter+1] = this.Quaternion.y;
-        //Sprite2DInstancedRes.OrientationsArray[orIter+2] = this.Quaternion.z;
-        //Sprite2DInstancedRes.OrientationsArray[orIter+3] = this.Quaternion.w;
-
-        Sprite2DInstancedRes.OrientationsArray[iter] = rigid.Orien;
-
-        let uvIter = iter * 2
-        
-        Sprite2DInstancedRes.UVsArray[uvIter] = this.uvcoords.X;
-        Sprite2DInstancedRes.UVsArray[uvIter+1] = this.uvcoords.Y;
+        if (this.framecount > this.framespeed){
+            this.uvcoords.X += 1;
+            this.uvcoords.X %= (Sprite2DInstancedRes.Sprite.numOfSubTexX); 
+            this.framecount = 0;
+        }
+        this.framecount += 1;
 
         Sprite2DInstancedRes.Iter += 1;
        
@@ -301,15 +299,15 @@ Sprite2DInstancedRes.MaxCount = 100000;
 Sprite2DInstancedRes.Mesh = null;
 Sprite2DInstancedRes.Iter = 0;
 
-Sprite2DInstancedRes.UVAttriubutes = null;
-Sprite2DInstancedRes.PositionsAttributes = null;
-Sprite2DInstancedRes.OrientationsAttributes = null;
-Sprite2DInstancedRes.ScalesAttributes = null;
+Sprite2DInstancedRes.SubUVwPositionAttributes = null; // vec4 xy is subuv and zw is position
+Sprite2DInstancedRes.OrienwScaleAttributes = null; //vec3 with x being orientation and yz being scale on x and y axis
+Sprite2DInstancedRes.TextureDetailsAttributes = null; //vec4 with xy being the dimensions of texture and zw being the subtexture size;
 
-Sprite2DInstancedRes.UVsArray = null;
-Sprite2DInstancedRes.PositionsArray = null;
-Sprite2DInstancedRes.OrientationsArray = null;
-Sprite2DInstancedRes.ScalesArray = null;
+Sprite2DInstancedRes.SubUVwPositionArray = null;
+Sprite2DInstancedRes.OrienwScaleArray = null;
+Sprite2DInstancedRes.TextureDetailsArray = null;
+
+
 Sprite2DInstancedRes.Geometry = null;
 Sprite2DInstancedRes.Sprite = null;
 Sprite2DInstancedRes.Material = null;
