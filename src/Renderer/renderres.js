@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import { getInstancedSpriteMat } from './ShaderMaterials/instancedspritemat';
-import testsprite from '../assets/testsprites.png';
-import roarstar from "../assets/star.png";
-import astroid from "../assets/astroid1.png";
+//import testsprite from '../assets/testsprites.png';
+//import roarstar from "../assets/star.png";
+//import astroid from "../assets/astroid1.png";
 import planet from "../assets/planetatlas.png";
 import {UniformSpriteTextureLoader} from './TextureLoader/textureloader';
 import { Sprite } from 'three';
