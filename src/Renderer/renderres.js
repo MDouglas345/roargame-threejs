@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import { getInstancedSpriteMat } from './ShaderMaterials/instancedspritemat';
-import testsprite from '../assets/testsprites.png';
-import roarstar from "../assets/star.png";
-import astroid from "../assets/astroid1.png";
-import planet from "../assets/planet1.png";
+//import testsprite from '../assets/testsprites.png';
+//import roarstar from "../assets/star.png";
+//import astroid from "../assets/astroid1.png";
+import planet from "../assets/planetatlas.png";
 import {UniformSpriteTextureLoader} from './TextureLoader/textureloader';
 import { Sprite } from 'three';
 
@@ -194,8 +194,16 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
         this.Euler = new THREE.Euler(0,0,0,'XYZ');
         this.Quaternion = new THREE.Quaternion();
 
-        this.framespeed = 2;
+        
+
+        
         this.framecount = 0;
+
+        
+        this.framespeed = 1;
+
+        
+        
 
         
     }
@@ -227,8 +235,7 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
 
         Sprite2DInstancedRes.Geometry.boundingSphere = new THREE.Sphere( new THREE.Vector3(), 30000 );
 
-        Sprite2DInstancedRes.Sprite = new UniformSpriteTextureLoader(planet, 5000, 100, 50,1);
-        
+        Sprite2DInstancedRes.Sprite = new UniformSpriteTextureLoader(planet, 16000, 700, 160,7);
 
         Sprite2DInstancedRes.Sprite.setAttribute(Sprite2DInstancedRes.TextureDetailsArray, 4);
 
@@ -290,7 +297,10 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
             this.uvcoords.X %= (Sprite2DInstancedRes.Sprite.numOfSubTexX); 
             this.framecount = 0;
         }
+
+       
         this.framecount += 1;
+        
 
         Sprite2DInstancedRes.Iter += 1;
        
