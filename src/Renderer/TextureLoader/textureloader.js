@@ -23,7 +23,8 @@ constructor(filepath, imgwidth, imgheight){
         this.height = imgheight;
 
         this.texture.generateMipmaps = false;
-        this.texture.minFilter = THREE.LinearFilter;
+        this.texture.magFilter = THREE.NearestFilter;
+        this.minFilter = THREE.NearestFilter;
         this.texture.needsUpdate = true;
         
     }

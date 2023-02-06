@@ -66,6 +66,7 @@ export class DefaultScene extends Scene{
         uitestobj.rigidbody.Pos = new util.Vec2(0,0);
 
         let worldcam = new WorldCamera2D(500);
+        
     
         
         

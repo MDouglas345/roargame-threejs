@@ -15,7 +15,7 @@ class ThreeRenderer{
         let container = document.createElement( 'div' );
 	    document.body.appendChild( container );
 
-        this.renderer = new THREE.WebGLRenderer( { antialias: true } );
+        this.renderer = new THREE.WebGLRenderer( { antialias: false } );
 	    this.renderer.setPixelRatio( window.devicePixelRatio );
 	    this.renderer.setSize( this.SCREEN_WIDTH, this.SCREEN_HEIGHT );
 	    container.appendChild( this.renderer.domElement );
@@ -24,6 +24,7 @@ class ThreeRenderer{
         
 
 	    this.renderer.autoClear = false;
+        this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.setClearColor(new THREE.Color(0x553321));
 
         /*
