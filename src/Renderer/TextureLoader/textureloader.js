@@ -21,6 +21,10 @@ constructor(filepath, imgwidth, imgheight){
 
         this.width = imgwidth;
         this.height = imgheight;
+
+        this.texture.generateMipmaps = false;
+        this.texture.minFilter = THREE.LinearFilter;
+        this.texture.needsUpdate = true;
         
     }
 

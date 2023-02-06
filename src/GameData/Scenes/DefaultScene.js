@@ -71,13 +71,19 @@ export class DefaultScene extends Scene{
         
         let planes = [];
 
-        for (let i = 0; i < 4000; i++){
-            planes.push(new Sprite2D(util.getRandomFloat(30) + 15, util.getRandomFloat(30) + 15));
+        for (let i = 0; i < 5000; i++){
+            
+            planes.push(new Sprite2D(util.getRandomFloat(100) + 50, util.getRandomFloat(100) + 50));
             planes[i].rigidbody.Pos = new util.Vec2(util.getRandomFloat(5000) - 2500, util.getRandomFloat(5000) - 2500);
-            planes[i].rigidbody.AngVel = util.getRandomFloat(10) - 5;
+            planes[i].rigidbody.Orien = util.getRandomFloat(10) - 5;
             //planes[i].rigidbody.Vel = new util.Vec2(4,0);
             this.addObject(planes[i], 1);
         }
+
+        
+        planes.push(new Sprite2D(250, 250));
+        planes[planes.length-1].rigidbody.Pos = new util.Vec2(0,0);
+        this.addObject(planes[planes.length-1],1);
         
         
         this.addObject(testobj, 0);
