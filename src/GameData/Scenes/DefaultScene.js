@@ -77,6 +77,7 @@ export class DefaultScene extends Scene{
             planes.push(new Sprite2D(util.getRandomFloat(100) + 50, util.getRandomFloat(100) + 50));
             planes[i].rigidbody.Pos = new util.Vec2(util.getRandomFloat(5000) - 2500, util.getRandomFloat(5000) - 2500);
             planes[i].rigidbody.Orien = util.getRandomFloat(10) - 5;
+            //planes[i].rigidbody.AngVel = util.getRandomFloat(10) - 5;
             //planes[i].rigidbody.Vel = new util.Vec2(4,0);
             this.addObject(planes[i], 1);
         }

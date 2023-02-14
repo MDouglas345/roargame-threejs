@@ -60,6 +60,7 @@ class JoystickController extends InputController{
             });
 
             this.PrimaryJoystick.on('end', function(evt, data){
+
                 
                 thisObj.PrimaryDirection.Reset();
             });
