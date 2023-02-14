@@ -4,6 +4,7 @@ import { getInstancedSpriteMat } from './ShaderMaterials/instancedspritemat';
 //import roarstar from "../assets/star.png";
 //import astroid from "../assets/astroid1.png";
 import planet from "../assets/planetatlas.png";
+import bg1 from "../assets/bg1.png";
 import {UniformSpriteTextureLoader} from './TextureLoader/textureloader';
 import { Sprite } from 'three';
 import * as util from "../Utility/utility.js"
@@ -227,7 +228,7 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
 
 
         Sprite2DInstancedRes.SubUVwPositionArray = new Float32Array(Sprite2DInstancedRes.MaxCount * 4);
-        Sprite2DInstancedRes.OrienwScaleArray = new Float32Array(Sprite2DInstancedRes.MaxCount * 3);
+        Sprite2DInstancedRes.OrienwScaleArray = new Float32Array(Sprite2DInstancedRes.MaxCount * 4);
         Sprite2DInstancedRes.TextureDetailsArray = new Float32Array(4*4);
 
         Sprite2DInstancedRes.TextureDetailsAttributes = new THREE.BufferAttribute(Sprite2DInstancedRes.TextureDetailsArray,4);
@@ -236,7 +237,7 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
         Sprite2DInstancedRes.SubUVwPositionAttributes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.SubUVwPositionArray, 4);
         Sprite2DInstancedRes.SubUVwPositionAttributes.setUsage(THREE.DynamicDrawUsage);
 
-        Sprite2DInstancedRes.OrienwScaleAttributes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.OrienwScaleArray, 3);
+        Sprite2DInstancedRes.OrienwScaleAttributes = new THREE.InstancedBufferAttribute(Sprite2DInstancedRes.OrienwScaleArray, 4);
         Sprite2DInstancedRes.OrienwScaleAttributes.setUsage(THREE.DynamicDrawUsage);
 
 
@@ -298,10 +299,11 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
         Sprite2DInstancedRes.SubUVwPositionArray[uvposIter+2] = rigid.Pos.X;
         Sprite2DInstancedRes.SubUVwPositionArray[uvposIter+3] = rigid.Pos.Y;
 
-        let orscaleIter = iter * 3;
+        let orscaleIter = iter * 4;
         Sprite2DInstancedRes.OrienwScaleArray[orscaleIter] = rigid.Orien;
         Sprite2DInstancedRes.OrienwScaleArray[orscaleIter+1] = this.Scale.x;
         Sprite2DInstancedRes.OrienwScaleArray[orscaleIter+2] = this.Scale.y;
+        Sprite2DInstancedRes.OrienwScaleArray[orscaleIter+3] = -100;
 
         this.framecount += this.frameincr;
 
@@ -336,4 +338,160 @@ Sprite2DInstancedRes.TextureDetailsArray = null;
 Sprite2DInstancedRes.Geometry = null;
 Sprite2DInstancedRes.Sprite = null;
 Sprite2DInstancedRes.Material = null;
+
+
+
+
+
+
+
+
+
+export class Background2DInstancedRes extends RenderRes2DInstanced{
+    constructor(length, width, uvcoords){
+        super(-10);
+        this.uvcoords = uvcoords;
+
+        this.Scale.setX(length);
+        this.Scale.setY(width);
+
+        
+
+        
+        this.framecount = 0
+        
+        this.framespeed = 1;
+
+        this.frameincr = 1;
+
+        
+        
+
+        
+    }
+
+     addToScene(scene){
+        Background2DInstancedRes.count += 1;
+    }
+
+    static create(){
+
+
+
+        Background2DInstancedRes.SubUVwPositionArray = new Float32Array(Background2DInstancedRes.MaxCount * 4);
+        Background2DInstancedRes.OrienwScaleArray = new Float32Array(Background2DInstancedRes.MaxCount * 4);
+        Background2DInstancedRes.TextureDetailsArray = new Float32Array(4*4);
+
+        Background2DInstancedRes.TextureDetailsAttributes = new THREE.BufferAttribute(Background2DInstancedRes.TextureDetailsArray,4);
+        Background2DInstancedRes.TextureDetailsAttributes.setUsage(THREE.DynamicDrawUsage);
+
+        Background2DInstancedRes.SubUVwPositionAttributes = new THREE.InstancedBufferAttribute(Background2DInstancedRes.SubUVwPositionArray, 4);
+        Background2DInstancedRes.SubUVwPositionAttributes.setUsage(THREE.DynamicDrawUsage);
+
+        Background2DInstancedRes.OrienwScaleAttributes = new THREE.InstancedBufferAttribute(Background2DInstancedRes.OrienwScaleArray, 4);
+        Background2DInstancedRes.OrienwScaleAttributes.setUsage(THREE.DynamicDrawUsage);
+
+
+
+        Background2DInstancedRes.Geometry = new THREE.InstancedBufferGeometry().copy( new THREE.PlaneGeometry(1,1) );
+
+        Background2DInstancedRes.Geometry.boundingSphere = new THREE.Sphere( new THREE.Vector3(), 9999999 );
+
+        Background2DInstancedRes.Sprite = new UniformSpriteTextureLoader(bg1, 1624, 914, 1,1);
+
+        Background2DInstancedRes.Sprite.texture.generateMipmaps = false;
+        Background2DInstancedRes.Sprite.texture.magFilter = THREE.LinearFilter;
+        Background2DInstancedRes.Sprite.minFilter = THREE.LinearFilter;
+        Background2DInstancedRes.Sprite.texture.needsUpdate = true;
+
+        Background2DInstancedRes.Sprite.setAttribute(Background2DInstancedRes.TextureDetailsArray, 4);
+
+        Background2DInstancedRes.Material = getInstancedSpriteMat(Background2DInstancedRes.Sprite.getTexture());
+
+        Background2DInstancedRes.Material.transparent = true;
+
+
+
+        Background2DInstancedRes.Mesh = new THREE.Mesh(
+            Background2DInstancedRes.Geometry,
+            Background2DInstancedRes.Material
+  
+        );
+
+        
+
+        Background2DInstancedRes.Material.needsUpdate = true;
+
+        Background2DInstancedRes.Geometry.setAttribute("TextureDetails", Background2DInstancedRes.TextureDetailsAttributes);
+        Background2DInstancedRes.Geometry.setAttribute("SubUVwPos", Background2DInstancedRes.SubUVwPositionAttributes);
+        Background2DInstancedRes.Geometry.setAttribute("OrienwScale", Background2DInstancedRes.OrienwScaleAttributes);
+
+        return Background2DInstancedRes.Mesh;
+    }
+
+    static resetIter(){
+        Background2DInstancedRes.Iter = 0;
+    }
+
+    static updateMatrix(){
+        Background2DInstancedRes.Geometry.attributes.SubUVwPos.needsUpdate = true;
+        Background2DInstancedRes.Geometry.attributes.OrienwScale.needsUpdate = true;
+        
+    }
+        
+
+    static updateCount(){
+        Background2DInstancedRes.Geometry.instanceCount = Background2DInstancedRes.count;
+        Background2DInstancedRes.Geometry.needsUpdate = true;
+    }
+
+    Update(object){
+        let rigid = object.rigidbody;
+        let iter = Background2DInstancedRes.Iter;
+
+        let uvposIter = iter * 4;
+        Background2DInstancedRes.SubUVwPositionArray[uvposIter] = this.uvcoords.X;
+        Background2DInstancedRes.SubUVwPositionArray[uvposIter+1] = this.uvcoords.Y;
+        Background2DInstancedRes.SubUVwPositionArray[uvposIter+2] = rigid.Pos.X;
+        Background2DInstancedRes.SubUVwPositionArray[uvposIter+3] = rigid.Pos.Y;
+
+        let orscaleIter = iter * 4;
+        Background2DInstancedRes.OrienwScaleArray[orscaleIter] = rigid.Orien;
+        Background2DInstancedRes.OrienwScaleArray[orscaleIter+1] = this.Scale.x;
+        Background2DInstancedRes.OrienwScaleArray[orscaleIter+2] = this.Scale.y;
+        Background2DInstancedRes.OrienwScaleArray[orscaleIter+3] = -100;
+
+        this.framecount += this.frameincr;
+
+        if (this.framecount > this.framespeed){
+            this.uvcoords.X += 1;
+            this.uvcoords.X %= (Background2DInstancedRes.Sprite.numOfSubTexX); 
+            this.framecount = 0;
+        }
+
+       
+        
+        
+
+        Background2DInstancedRes.Iter += 1;
+       
+    }
+}
+Background2DInstancedRes.count = 0;
+Background2DInstancedRes.MaxCount = 100000;
+Background2DInstancedRes.Mesh = null;
+Background2DInstancedRes.Iter = 0;
+
+Background2DInstancedRes.SubUVwPositionAttributes = null; // vec4 xy is subuv and zw is position
+Background2DInstancedRes.OrienwScaleAttributes = null; //vec3 with x being orientation and yz being scale on x and y axis
+Background2DInstancedRes.TextureDetailsAttributes = null; //vec4 with xy being the dimensions of texture and zw being the subtexture size;
+
+Background2DInstancedRes.SubUVwPositionArray = null;
+Background2DInstancedRes.OrienwScaleArray = null;
+Background2DInstancedRes.TextureDetailsArray = null;
+
+
+Background2DInstancedRes.Geometry = null;
+Background2DInstancedRes.Sprite = null;
+Background2DInstancedRes.Material = null;
 

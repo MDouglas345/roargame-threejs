@@ -7,10 +7,9 @@ export function getInstancedSpriteMat(texture){
         
         vertexShader : `
             
-     
 
             attribute vec4 SubUVwPos;
-            attribute vec3 OrienwScale;
+            attribute vec4 OrienwScale;
             attribute vec4 TextureDetails;
 
             varying vec2 vertexUV;
@@ -43,7 +42,7 @@ export function getInstancedSpriteMat(texture){
                 vertexUV = uv * tex + (vec2(SubUVwPos.x / TextureDetails.z , SubUVwPos.y / TextureDetails.w));
                 //vertexUV = uv;
 
-                vec3 vPosition = rotatePoint(position, OrienwScale.x, vec3(OrienwScale.yz,1), vec3(SubUVwPos.zw,-100));
+                vec3 vPosition = rotatePoint(position, OrienwScale.x, vec3(OrienwScale.yz,1), vec3(SubUVwPos.zw, OrienwScale.w));
                 gl_Position = projectionMatrix * modelViewMatrix * vec4( vPosition, 1.0 );
                 
 

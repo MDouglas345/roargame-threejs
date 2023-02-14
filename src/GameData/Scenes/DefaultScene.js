@@ -3,9 +3,10 @@ import UITestObject from "../../BaseObjects/uitestobject";
 import { Scene } from "../../SceneManager/scene";
 import * as util from "../../Utility/utility.js"
 import WorldCamera2D from "../../BaseObjects/worldcamera2d";
-import { Plane2DInstancedRes, Sprite2DInstancedRes } from "../../Renderer/renderres.js";
+import { Plane2DInstancedRes, Sprite2DInstancedRes, Background2DInstancedRes } from "../../Renderer/renderres.js";
 import IPlane2D from "../../BaseObjects/iplane2d";
 import Sprite2D from "../../BaseObjects/sprite2d";
+import { Background2D } from "../../BaseObjects/background2d";
 
 
 
@@ -56,7 +57,7 @@ export class DefaultScene extends Scene{
         this.addLayer();
         this.addLayer();
 
-        this.addInstancedMesh(Plane2DInstancedRes);
+        this.addInstancedMesh(Background2DInstancedRes);
         this.addInstancedMesh(Sprite2DInstancedRes);
 
         let testobj = new Plane2D(10,10);
@@ -66,13 +67,19 @@ export class DefaultScene extends Scene{
         uitestobj.rigidbody.Pos = new util.Vec2(0,0);
 
         let worldcam = new WorldCamera2D(500);
+
+
+        let bg = new Background2D(1, 5310,3000);
+        this.addObject(bg, 0);
+
+        
         
     
         
         
         let planes = [];
 
-        for (let i = 0; i < 5000; i++){
+        for (let i = 0; i < 200; i++){
             
             planes.push(new Sprite2D(util.getRandomFloat(100) + 50, util.getRandomFloat(100) + 50));
             planes[i].rigidbody.Pos = new util.Vec2(util.getRandomFloat(5000) - 2500, util.getRandomFloat(5000) - 2500);
@@ -82,10 +89,11 @@ export class DefaultScene extends Scene{
             this.addObject(planes[i], 1);
         }
 
-        
+        /*
         planes.push(new Sprite2D(250, 250));
         planes[planes.length-1].rigidbody.Pos = new util.Vec2(0,0);
         this.addObject(planes[planes.length-1],1);
+        */
         
         
         this.addObject(testobj, 0);

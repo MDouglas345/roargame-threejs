@@ -80,6 +80,23 @@ class ObjectManager{
     });
   }
 
+  getObjectByName(name){
+    let returnitem = null;
+    this.layers.forEach(function(layer, Lindex){
+      layer.forEach(function(item, Iindex, array){
+        if (item.Name == name){
+          returnitem = item;
+          return;
+        }
+      });
+      if (returnitem != null){
+        return;
+      }
+    });
+
+    return returnitem;
+  }
+
 
 }
 
