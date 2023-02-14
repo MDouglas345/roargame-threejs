@@ -6,6 +6,14 @@ import { getInstancedSpriteMat } from './ShaderMaterials/instancedspritemat';
 import planet from "../assets/planetatlas.png";
 import {UniformSpriteTextureLoader} from './TextureLoader/textureloader';
 import { Sprite } from 'three';
+import * as util from "../Utility/utility.js"
+
+
+function sleep(seconds) 
+{
+  var e = new Date().getTime() + (seconds * 1000);
+  while (new Date().getTime() <= e) {}
+}
 
 
 class RenderRes{
@@ -197,10 +205,12 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
         
 
         
-        this.framecount = 0;
+        this.framecount = util.getRandomInt(500);
 
         
-        this.framespeed = 1;
+        this.framespeed = 500;
+
+        this.frameincr = 5;
 
         
         
@@ -251,6 +261,8 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
   
         );
 
+        
+
         Sprite2DInstancedRes.Material.needsUpdate = true;
 
         Sprite2DInstancedRes.Geometry.setAttribute("TextureDetails", Sprite2DInstancedRes.TextureDetailsAttributes);
@@ -272,8 +284,8 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
         
 
     static updateCount(){
-        Sprite2DInstancedRes.Geometry.maxInstancedCount = 1;
-        Sprite2DInstancedRes.Geometry.instanceCount = Sprite2DInstancedRes.count
+        Sprite2DInstancedRes.Geometry.instanceCount = Sprite2DInstancedRes.count;
+        Sprite2DInstancedRes.Geometry.needsUpdate = true;
     }
 
     Update(object){
@@ -291,6 +303,7 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
         Sprite2DInstancedRes.OrienwScaleArray[orscaleIter+1] = this.Scale.x;
         Sprite2DInstancedRes.OrienwScaleArray[orscaleIter+2] = this.Scale.y;
 
+        this.framecount += this.frameincr;
 
         if (this.framecount > this.framespeed){
             this.uvcoords.X += 1;
@@ -299,7 +312,7 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
         }
 
        
-        this.framecount += 1;
+        
         
 
         Sprite2DInstancedRes.Iter += 1;

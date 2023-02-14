@@ -58,8 +58,8 @@ class KeyboardController extends InputController{
                   });
 
                   screen.orientation.lock('landscape'); // have to be in fullscreen mode first
-
                   */
+                  
     }
 
     getPrimaryDirection(){

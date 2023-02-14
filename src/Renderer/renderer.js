@@ -37,6 +37,8 @@ class ThreeRenderer{
 
         this.stats = null;
 
+
+
         
 
         
@@ -95,6 +97,14 @@ class ThreeRenderer{
             this.stats = stats;
             
         } 
+
+
+      
+
+
+        
+
+                  
         
         
     }
