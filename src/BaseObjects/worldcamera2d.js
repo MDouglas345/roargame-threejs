@@ -13,6 +13,8 @@ class WorldCamera2D extends Camera2D{
         this.aspect = aspect;
 
         this.rigidbody.Enable();
+
+        this.Name = "mCamera";
     }
 
     resize(aspect = this.aspect, frustrumSize = this.frustumSize){

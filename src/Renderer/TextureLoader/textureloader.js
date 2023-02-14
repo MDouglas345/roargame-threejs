@@ -4,12 +4,9 @@ var onLoad = function(texture) {
 
         console.log("Texture is loaded");
         
-        /*
-        texture.generateMipmaps = false;
-        texture.magFilter = THREE.NearestFilter;
-        texture.minFilter = THREE.NearestFilter;
-        texture.needsUpdate = true;
-        */
+        
+        
+        
 
         
 };
@@ -36,12 +33,12 @@ constructor(filepath, imgwidth, imgheight){
         this.width = imgwidth;
         this.height = imgheight;
 
-       /* 
+       
         this.texture.generateMipmaps = false;
         this.texture.magFilter = THREE.NearestFilter;
         this.minFilter = THREE.NearestFilter;
         this.texture.needsUpdate = true;
-        */
+        
         
         
         

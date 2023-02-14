@@ -27,6 +27,8 @@ export class GameSystem{
 
     this.Physics = new PhysicsSystem();
 
+    this.layers = this.ObjectHandleInstance.layers;
+
     //this.QuadTree = new QT.QuadTree(this.m_Player);
 
     //this.CollisionHandler = new CH.CollisionHandler(this.QuadTree);
@@ -36,7 +38,7 @@ export class GameSystem{
     
 
 
-    this.ObjectHandleInstance.layers.forEach(layer =>{
+    this.layers.forEach(layer =>{
       layer.forEach(item =>{
         item.Init();
       });
@@ -52,7 +54,7 @@ export class GameSystem{
   }
 
   EarlyUpdate(elapsed){
-    this.ObjectHandleInstance.layers.forEach(layer =>{
+    this.layers.forEach(layer =>{
       layer.forEach(item =>{
         item.EarlyUpdate(elapsed);
       });
@@ -85,7 +87,7 @@ export class GameSystem{
 
     //this.CollisionHandler.CheckCollisions();
 
-    this.ObjectHandleInstance.layers.forEach(layer =>{
+    this.layers.forEach(layer =>{
       layer.forEach(item =>{
         item.Update(elapsed);
       });
@@ -100,7 +102,7 @@ export class GameSystem{
   }
 
   LateUpdate(elapsed){
-    this.ObjectHandleInstance.layers.forEach(layer =>{
+    this.layers.forEach(layer =>{
       layer.forEach(item =>{
         item.LateUpdate(elapsed);
       });
@@ -119,7 +121,7 @@ export class GameSystem{
 
 
   UpdateGeometries(){
-    this.ObjectHandleInstance.layers.forEach(layer =>{
+    this.layers.forEach(layer =>{
       layer.forEach(item =>{
         item.UpdateGeometry(item);
       });

@@ -6,6 +6,7 @@ class GameObject{
         this.rigidbody = new Rigidbody();
         this.renderres = new NoRes();
         this.UILayer = false;
+        this.Name = "";
     }
 
     Init(){
