@@ -66,7 +66,7 @@ export class DefaultScene extends Scene{
         let uitestobj = new UITestObject(new util.Vec2(100,-100));
         uitestobj.rigidbody.Pos = new util.Vec2(0,0);
 
-        let worldcam = new WorldCamera2D(500);
+        let worldcam = new WorldCamera2D(300);
 
 
         let bg = new Background2D(1, 5310,3000);
@@ -79,10 +79,10 @@ export class DefaultScene extends Scene{
         
         let planes = [];
 
-        for (let i = 0; i < 200; i++){
+        for (let i = 0; i < 600; i++){
             
-            planes.push(new Sprite2D(util.getRandomFloat(100) + 50, util.getRandomFloat(100) + 50));
-            planes[i].rigidbody.Pos = new util.Vec2(util.getRandomFloat(5000) - 2500, util.getRandomFloat(5000) - 2500);
+            planes.push(new Sprite2D(util.getRandomFloat(50) + 25, util.getRandomFloat(50) + 25));
+            planes[i].rigidbody.Pos = new util.Vec2(util.getRandomFloat(5000) - 2500, util.getRandomFloat(3000) - 1500);
             planes[i].rigidbody.Orien = util.getRandomFloat(10) - 5;
             //planes[i].rigidbody.AngVel = util.getRandomFloat(10) - 5;
             //planes[i].rigidbody.Vel = new util.Vec2(4,0);

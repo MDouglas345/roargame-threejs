@@ -15,9 +15,10 @@ class ThreeRenderer{
         let container = document.createElement( 'div' );
 	    document.body.appendChild( container );
 
-        this.renderer = new THREE.WebGLRenderer( { antialias: false } );
-	    this.renderer.setPixelRatio( window.devicePixelRatio );
+        this.renderer = new THREE.WebGLRenderer( { antialias: true } );
+	    this.renderer.setPixelRatio( window.devicePixelRatio);
 	    this.renderer.setSize( this.SCREEN_WIDTH, this.SCREEN_HEIGHT );
+        
 	    container.appendChild( this.renderer.domElement );
 
         
