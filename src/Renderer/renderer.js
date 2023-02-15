@@ -13,11 +13,15 @@ class ThreeRenderer{
         this.uicamera = null;
 
         let container = document.createElement( 'div' );
+        container.className = 'w-100';
 	    document.body.appendChild( container );
 
         this.renderer = new THREE.WebGLRenderer( { antialias: true } );
-	    this.renderer.setPixelRatio( window.devicePixelRatio);
-	    this.renderer.setSize( this.SCREEN_WIDTH, this.SCREEN_HEIGHT );
+	    this.renderer.setPixelRatio( window.devicePixelRatio );
+        this.quality = 1;
+	    this.renderer.setSize( this.SCREEN_WIDTH/this.quality, this.SCREEN_HEIGHT/this.quality, false );
+        
+        this.renderer.domElement.style.width = "100%";
         
 	    container.appendChild( this.renderer.domElement );
 
@@ -25,7 +29,6 @@ class ThreeRenderer{
         
 
 	    this.renderer.autoClear = false;
-        this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.setClearColor(new THREE.Color(0x553321));
 
         /*
@@ -37,6 +40,8 @@ class ThreeRenderer{
         this.sceneUIElements = null;
 
         this.stats = null;
+
+        
 
 
 
@@ -71,7 +76,7 @@ class ThreeRenderer{
         this.SCREEN_HEIGHT = window.innerHeight;
         this.aspect = this.SCREEN_WIDTH / this.SCREEN_HEIGHT;
 
-        this.renderer.setSize( this.SCREEN_WIDTH, this.SCREEN_HEIGHT );
+        this.renderer.setSize( this.SCREEN_WIDTH/this.quality, this.SCREEN_HEIGHT/this.quality, false );
 
         this.camera.resize(this.aspect, this.camera.frustumSize);
         this.uicamera.resize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
