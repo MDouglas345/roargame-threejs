@@ -1,5 +1,6 @@
 import UIGameObject from "./uigameobject";
 import { TestUIRes } from "../Renderer/renderres";
+import * as roarengine from "../index.js";
 
 class UITestObject extends UIGameObject{
     constructor(pos){
@@ -12,6 +13,7 @@ class UITestObject extends UIGameObject{
 
     onClick(){
         console.log("Success!");
+        roarengine.mInputSystem.FlipDominant();
     }
 }
 

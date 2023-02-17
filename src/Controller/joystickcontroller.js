@@ -11,6 +11,11 @@ class JoystickController extends InputController{
         this.PrimaryJoystick = null;
         this.SecondaryJoystick = null;
         this.RightDominant = true;
+
+        this.truePrimary = this.PrimaryDirection;
+        this.trueSecondary = this.SecondaryDirection;
+
+        this.twinStick = false;
     }   
 
     Init(controlOptions){
@@ -34,6 +39,7 @@ class JoystickController extends InputController{
 
 
         var thisObj = this;
+        this.twinStick = controlOptions.touch.twinStick;
 
         if (controlOptions.touch.twinstick){
             this.PrimaryJoystick = nipplejs.create({
@@ -73,7 +79,7 @@ class JoystickController extends InputController{
 
             this.SecondaryJoystick.on('end', function(evt, data){
                 
-                thisObj.PrimaryDirection.Reset();
+                thisObj.SecondaryDirection.Reset();
             });
 
 
@@ -102,17 +108,48 @@ class JoystickController extends InputController{
     }
 
     FlipDominant(){
-        let t = this.PrimaryJoystick;
-        this.PrimaryJoystick = this.SecondaryJoystick;
-        this.SecondaryJoystick = t;
+        if (!this.twinStick){
+            return;
+        }
+        if (this.RightDominant){
+            this.RightDominant = false;
+            this.truePrimary = this.SecondaryDirection;
+            this.trueSecondary = this.PrimaryDirection
+        }
+        else{
+            this.RightDominant = true;
+            this.truePrimary = this.PrimaryDirection;
+            this.trueSecondary = this.SecondaryDirection
+        }
     }
 
     getPrimaryDirection(){
-        return this.PrimaryDirection;
+        return this.truePrimary;
     }
+
+    getSecondaryDirection(){
+        return this.trueSecondary;
+    }
+
 
     Update(){
        
+    }
+
+    onPrimaryMove(event,data){
+        this.PrimaryDirection.fromRadians(data.angle.radian);
+    }
+
+    onPrimaryStop(event,data){
+        this.PrimaryDirection.Reset();
+    }
+
+    onSecondaryMove(event,data){
+        this.PrimaryDirection.fromRadians(data.angle.radian);
+    }
+
+    onSecondaryStop(event,data){
+        this.PrimaryDirection.Reset();
     }
 
 
