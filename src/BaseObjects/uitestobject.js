@@ -6,7 +6,12 @@ class UITestObject extends UIGameObject{
         super(pos);
 
         this.renderres = new TestUIRes(50,50);
+        
 
+    }
+
+    onClick(){
+        console.log("Success!");
     }
 }
 

@@ -19,6 +19,7 @@ class ObjectManager{
     loadScene(objects, scene, uiscene){
         this.layers = []
         var uielements = [];
+        var uielementsraw = [];
 
         objects.InstancedMeshes.forEach((mesh) =>{
           scene.add(mesh)
@@ -32,6 +33,7 @@ class ObjectManager{
             var newitem = copyInstance(item);
               if (newitem.UILayer == true){
                 newitem.AddToScene(uiscene);
+                uielementsraw.push(newitem.renderres.mesh);
                 uielements.push(newitem);
               }
               else{
@@ -62,6 +64,7 @@ class ObjectManager{
         roarengine.mRenderer.camera = objects.MainCamera
         roarengine.mRenderer.uicamera = objects.UICamera;
         roarengine.mRenderer.sceneUIElements = uielements;
+        roarengine.mRenderer.sceneUIElementsRaw = uielementsraw;
     }
 
     CleanUp(){

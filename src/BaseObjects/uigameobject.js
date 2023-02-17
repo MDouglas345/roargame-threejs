@@ -16,6 +16,10 @@ class UIGameObject extends GameObject{
         
         this.rigidbody.Pos.X = this.uicamera.camera.left + this.offset.X;
         this.rigidbody.Pos.Y = this.uicamera.camera.top + this.offset.Y;
+
+        if (this.renderres != null){
+            this.renderres.mesh.ObjReference = this;
+        }
     }
 
     Update(elapsed){
@@ -25,6 +29,10 @@ class UIGameObject extends GameObject{
     onResize(){
         this.rigidbody.Pos.X = this.uicamera.camera.left + this.offset.X;
         this.rigidbody.Pos.Y = this.uicamera.camera.top + this.offset.Y;
+    }
+
+    onClick(){
+
     }
 
     

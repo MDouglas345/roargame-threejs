@@ -21,7 +21,7 @@ class ThreeRenderer{
         this.quality = 1;
 	    this.renderer.setSize( this.SCREEN_WIDTH/this.quality, this.SCREEN_HEIGHT/this.quality, false );
         
-        this.renderer.domElement.style.width = "101%";
+        this.renderer.domElement.style.width = "100%";
         
 	    container.appendChild( this.renderer.domElement );
 
@@ -38,11 +38,13 @@ class ThreeRenderer{
         this.renderer.sortObjects = false;
 
         this.sceneUIElements = null;
+        this.sceneUIElementsRaw = null;
 
         this.stats = null;
 
         
-
+        this.DummyVec = new THREE.Vector3();
+        this.Raycaster = new THREE.Raycaster();
 
 
         
@@ -104,15 +106,25 @@ class ThreeRenderer{
             
         } 
 
+        document.addEventListener('mousedown', () => this.RayCasterCallback(event), true);
+  
+    }
 
-      
+    RayCasterCallback(event){
+        this.Raycaster.setFromCamera(
+            {
+                x: (event.clientX / this.renderer.domElement.clientWidth) * 2 - 1,
+                y: -(event.clientY / this.renderer.domElement.clientHeight) * 2 + 1
+            },
+            this.uicamera.camera);
 
+        let intersects = this.Raycaster.intersectObjects(this.sceneUIElementsRaw, false);
 
-        
+        if (intersects.length == 0){
+            return;
+        }
 
-                  
-        
-        
+        intersects[0].object.ObjReference.onClick();
     }
 }
 

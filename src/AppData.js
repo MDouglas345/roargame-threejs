@@ -24,5 +24,9 @@ export default {
    "render" : {
         "useInstanced2D" : true,
         "displayFPS" : true
+   },
+   "network" : {
+        "" : ""
    }
+   
 };
