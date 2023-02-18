@@ -18,10 +18,11 @@ class ThreeRenderer{
 
         this.renderer = new THREE.WebGLRenderer( { antialias: true } );
 	    this.renderer.setPixelRatio( window.devicePixelRatio );
+        
         this.quality = 1;
 	    this.renderer.setSize( this.SCREEN_WIDTH/this.quality, this.SCREEN_HEIGHT/this.quality, false );
         
-        this.renderer.domElement.style.width = "100%";
+        this.renderer.domElement.style.width = "101%";
         
 	    container.appendChild( this.renderer.domElement );
 
@@ -50,6 +51,11 @@ class ThreeRenderer{
         
 
         
+    }
+
+    changeQuality(num){
+        this.quality = num;
+	    this.renderer.setSize( this.SCREEN_WIDTH/this.quality, this.SCREEN_HEIGHT/this.quality, false );
     }
 
     renderbase(scene, camera){

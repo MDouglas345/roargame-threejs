@@ -1,19 +1,21 @@
 import UIGameObject from "./uigameobject";
 import { TestUIRes } from "../Renderer/renderres";
 import * as roarengine from "../index.js";
+import * as util from "../Utility/utility.js"
 
 class UITestObject extends UIGameObject{
-    constructor(pos){
+    constructor(pos, size, color){
         super(pos);
 
-        this.renderres = new TestUIRes(50,50);
+        this.renderres = new TestUIRes(size.X,size.Y, color);
         
 
     }
 
     onClick(){
-        console.log("Success!");
-        roarengine.mInputSystem.FlipDominant();
+        //console.log("Success!");
+        //roarengine.mInputSystem.FlipDominant();
+        //roarengine.mRenderer.changeQuality(util.getRandomInt(15) + 1);
     }
 }
 

@@ -33,8 +33,8 @@ class ObjectManager{
             var newitem = copyInstance(item);
               if (newitem.UILayer == true){
                 newitem.AddToScene(uiscene);
-                uielementsraw.push(newitem.renderres.mesh);
-                uielements.push(newitem);
+                newitem.addToUIList(uielements, uielementsraw);
+            
               }
               else{
                 newitem.AddToScene(scene);

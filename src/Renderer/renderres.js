@@ -83,15 +83,15 @@ export class TestRes extends RenderRes2D{
 
 
 export class TestUIRes extends RenderRes2D{
-    constructor(length, width){
+    constructor(length, width, color){
         let geo = new THREE.PlaneGeometry(length,width);
         let mat =  new THREE.MeshBasicMaterial({
-                color : 0x0000FF,
+                color : color,
                 side : THREE.DoubleSide
         });
 
         
-
+        mat.transparent = true;
         super(geo, mat, new THREE.Mesh(geo, mat) )
         this.renderlayer = -1;
     }

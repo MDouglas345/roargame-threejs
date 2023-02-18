@@ -1,5 +1,6 @@
 import GameObject from "./gameobject";
 import * as roarengine from "../index.js"
+import { NoRes } from "../Renderer/renderres";
 
 
 class UIGameObject extends GameObject{
@@ -17,7 +18,7 @@ class UIGameObject extends GameObject{
         this.rigidbody.Pos.X = this.uicamera.camera.left + this.offset.X;
         this.rigidbody.Pos.Y = this.uicamera.camera.top + this.offset.Y;
 
-        if (this.renderres != null){
+        if (this.renderres != null && !(this.renderres instanceof NoRes)){
             this.renderres.mesh.ObjReference = this;
         }
     }
@@ -33,6 +34,11 @@ class UIGameObject extends GameObject{
 
     onClick(){
 
+    }
+
+    addToUIList(uielements, uielementsraw){
+        uielements.push(this);
+        uielementsraw.push(this.renderres.mesh);
     }
 
     

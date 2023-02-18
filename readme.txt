@@ -59,3 +59,6 @@ https://github.com/Anemolo/100k-objects-with-Instanced-Geometries/blob/master/sr
 
 spritesheet problem that I overlooked : https://gamedev.stackexchange.com/questions/22772/how-can-i-handle-sprite-sheets-with-nonuniform-sprite-dimensions
 
+
+string sprites : https://github.com/SeregPie/THREE.TextSprite
+

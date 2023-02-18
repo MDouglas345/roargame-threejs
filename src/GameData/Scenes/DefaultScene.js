@@ -7,6 +7,7 @@ import { Plane2DInstancedRes, Sprite2DInstancedRes, Background2DInstancedRes } f
 import IPlane2D from "../../BaseObjects/iplane2d";
 import Sprite2D from "../../BaseObjects/sprite2d";
 import { Background2D } from "../../BaseObjects/background2d";
+import { TestUiMenu } from "../../BaseObjects/testUIMenu";
 
 
 
@@ -63,10 +64,13 @@ export class DefaultScene extends Scene{
         let testobj = new Plane2D(10,10);
         testobj.rigidbody.Pos.X = 0;
 
-        let uitestobj = new UITestObject(new util.Vec2(100,-100));
+        let uitestobj = new UITestObject(new util.Vec2(100,-100), new util.Vec2(50,50), 0x00FFF1);
         uitestobj.rigidbody.Pos = new util.Vec2(0,0);
 
         let worldcam = new WorldCamera2D(300);
+
+
+        let menutest = new TestUiMenu();
 
 
         let bg = new Background2D(1, 5310,3000);
@@ -102,7 +106,9 @@ export class DefaultScene extends Scene{
 
         this.createFlatUILayer();
 
+        
         this.addObject(uitestobj, 0);
+        this.addObject(menutest, 0);
 
 
 

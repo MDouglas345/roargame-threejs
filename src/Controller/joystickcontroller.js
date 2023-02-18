@@ -39,7 +39,7 @@ class JoystickController extends InputController{
 
 
         var thisObj = this;
-        this.twinStick = controlOptions.touch.twinStick;
+        this.twinStick = controlOptions.touch.twinstick;
 
         if (controlOptions.touch.twinstick){
             this.PrimaryJoystick = nipplejs.create({
