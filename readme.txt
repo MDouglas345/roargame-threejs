@@ -62,3 +62,22 @@ spritesheet problem that I overlooked : https://gamedev.stackexchange.com/questi
 
 string sprites : https://github.com/SeregPie/THREE.TextSprite
 
+
+
+Big plans for the multiplayer, see https://cayman-game-dev-society.notion.site/PeerJs-Approach-c15764a8a1a543aaaa96b331e5fefc59
+
+But first...
+
+
+The problem of UI Scaling. Theres two approaches :
+
+
+Design distinct ui for mobile and desktop devices. This would likely give the best result visually, but added maintence since both
+menus will need to be updated if needed.
+
+Percent based ui, meaning one design for everything. Would be filled with fine tuning nightmare to get it looking decent on mobile and 
+desktop. The benefit would be only 1 design needed.
+
+
+Im leaning more toward the dual menu design approach just because I would have to create and debug the math around the percent  based ui.
+

@@ -209,9 +209,9 @@ export class Sprite2DInstancedRes extends RenderRes2DInstanced{
         this.framecount = util.getRandomInt(500);
 
         
-        this.framespeed = 500;
+        this.framespeed = util.getRandomInt(500) + 250;
 
-        this.frameincr = 5;
+        this.frameincr = util.getRandomInt(9) + 1;
 
         
         

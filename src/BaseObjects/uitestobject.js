@@ -17,6 +17,17 @@ class UITestObject extends UIGameObject{
         //roarengine.mInputSystem.FlipDominant();
         //roarengine.mRenderer.changeQuality(util.getRandomInt(15) + 1);
     }
+
+
+    Hide(){
+        this.renderres.mesh.visible = false;
+        this.Hidden = false;
+    }
+
+    Show(){
+        this.renderres.mesh.visible = true;
+        this.Hidden = true;
+    }
 }
 
 export default UITestObject;

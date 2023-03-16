@@ -213,3 +213,17 @@ export function copyInstance(original){
   );
   return copied;
 }
+
+
+export function getRandomString(length){
+  var str = "";
+
+  const AlphaSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (let i = 0; i < length; i++){
+    let start = getRandomInt(AlphaSet.length-1);
+    str += AlphaSet.substring(start, start+1);
+  }
+
+  return str;
+}

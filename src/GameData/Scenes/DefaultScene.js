@@ -8,6 +8,8 @@ import IPlane2D from "../../BaseObjects/iplane2d";
 import Sprite2D from "../../BaseObjects/sprite2d";
 import { Background2D } from "../../BaseObjects/background2d";
 import { TestUiMenu } from "../../BaseObjects/testUIMenu";
+import CSS2DRenderer from "three/examples/jsm/renderers/CSS2DRenderer.js"
+import * as roarengine from "../../index.js";
 
 
 
@@ -65,7 +67,9 @@ export class DefaultScene extends Scene{
         testobj.rigidbody.Pos.X = 0;
 
         let uitestobj = new UITestObject(new util.Vec2(100,-100), new util.Vec2(50,50), 0x00FFF1);
-        uitestobj.rigidbody.Pos = new util.Vec2(0,0);
+
+        let HostToggler = new UITestObject(new util.Vec2(window.innerWidth - 100, -100), new util.Vec2(100,100), 0xFFFFFFFF);
+        
 
         let worldcam = new WorldCamera2D(300);
 
@@ -77,7 +81,13 @@ export class DefaultScene extends Scene{
         this.addObject(bg, 0);
 
         
-        
+        uitestobj.onClick = function(){
+            menutest.ToggleVisibility();
+        }
+
+        HostToggler.onClick = function(){
+            roarengine.mNetworkManager.ToggleHosting();
+        }
     
         
         
@@ -108,6 +118,7 @@ export class DefaultScene extends Scene{
 
         
         this.addObject(uitestobj, 0);
+        this.addObject(HostToggler, 0);
         this.addObject(menutest, 0);
 
 

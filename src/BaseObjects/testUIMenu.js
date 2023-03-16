@@ -18,6 +18,7 @@ export class TestUiMenu extends UIGameObject{
         this.children.push(new UITestObject(new Vec2(-150,110), new Vec2(100,50), 0xddFF9F));
         this.children.push(new UITestObject(new Vec2(-150,40), new Vec2(100,50), 0xddFF9F));
         this.children.push(new UITestObject(new Vec2(-150,-30), new Vec2(100,50), 0xddFF9F));
+        this.Hide();
 
     }
 
@@ -63,6 +64,20 @@ export class TestUiMenu extends UIGameObject{
         this.children.forEach(child => {
             uielements.push(child);
             uielementsraw.push(child.renderres.mesh);
+        });
+    }
+
+    Hide(){
+        super.Hide();
+        this.children.forEach(child =>{
+            child.Hide();
+        });
+    }
+
+    Show(){
+        super.Show();
+        this.children.forEach(child =>{
+            child.Show();
         });
     }
 }

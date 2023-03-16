@@ -1,6 +1,10 @@
-class NetworkManager{
+export class NetworkManager{
     constructor(){
         this.states = [];
+
+    }
+
+    Init(networkSettings){
 
     }
 
@@ -11,4 +15,10 @@ class NetworkManager{
     sendChanges(){
 
     }
+
+    NotifyNetworkState(isHosting){
+
+    }
 }
+
+

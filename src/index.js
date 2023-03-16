@@ -9,6 +9,7 @@ import GameSystem  from "./GameSystem/gamesystem.js";
 import AppData from "./AppData.js";
 import KeyboardController from './Controller/keyboardcontroller.js';
 import JoystickController from './Controller/joystickcontroller.js';
+import { TestNetworkManager } from './Networking/TestNetworkManager';
 
 
 
@@ -37,6 +38,7 @@ export const mObjectManager = new ObjectManager();
 export const mSoundSystem = null;
 export const mSceneManager = new SceneManager();
 export const mRenderer = new ThreeRenderer();
+export const mNetworkManager = new TestNetworkManager();
 
 
 
@@ -70,6 +72,8 @@ function init(){
     mRenderer.bindResize();
 
     mGameSystem.Init();
+
+    mNetworkManager.Init(AppData.network);
 
     mInputSystem.Init(AppData.controls);
 

@@ -9,6 +9,9 @@ class UIGameObject extends GameObject{
         this.UILayer = true;
         this.uicamera = null;
         this.offset = offset;
+
+
+        this.Hidden = false;
         
     }
 
@@ -39,6 +42,26 @@ class UIGameObject extends GameObject{
     addToUIList(uielements, uielementsraw){
         uielements.push(this);
         uielementsraw.push(this.renderres.mesh);
+    }
+
+    Hide(){
+        this.Hidden = true;
+    }
+
+    Show(){
+        this.Hidden = false;
+    }
+
+    ToggleVisibility(){
+        if (this.Hidden){
+            this.Show();
+            
+        }
+        else{
+            this.Hide();
+
+        }
+        
     }
 
     
