@@ -68,7 +68,8 @@ export class DefaultScene extends Scene{
 
         let uitestobj = new UITestObject(new util.Vec2(100,-100), new util.Vec2(50,50), 0x00FFF1);
 
-        let HostToggler = new UITestObject(new util.Vec2(window.innerWidth - 100, -100), new util.Vec2(100,100), 0xFFFFFFFF);
+        let HostToggler = new UITestObject(new util.Vec2(window.innerWidth - 100, -100), new util.Vec2(50,50), 0xFFFFFFFF);
+        let ConnectHost = new UITestObject(new util.Vec2(window.innerWidth - 100, -200), new util.Vec2(50,50), 0x55df12);
         
 
         let worldcam = new WorldCamera2D(300);
@@ -87,6 +88,10 @@ export class DefaultScene extends Scene{
 
         HostToggler.onClick = function(){
             roarengine.mNetworkManager.ToggleHosting();
+        }
+
+        ConnectHost.onClick = function(){
+            roarengine.mNetworkManager.ConnectToFirstHost();
         }
     
         
@@ -119,7 +124,9 @@ export class DefaultScene extends Scene{
         
         this.addObject(uitestobj, 0);
         this.addObject(HostToggler, 0);
+        this.addObject(ConnectHost, 0);
         this.addObject(menutest, 0);
+        
 
 
 

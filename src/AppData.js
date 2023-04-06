@@ -26,8 +26,8 @@ export default {
         "displayFPS" : true
    },
    "network" : {
-        //"broker" : "http://localhost:3000"
-        "broker" : "https://roar-connection-broker.onrender.com"
+        "broker" : "10.0.0.38"
+        //"broker" : "https://roar-connection-broker.onrender.com"
    }
    
 };
