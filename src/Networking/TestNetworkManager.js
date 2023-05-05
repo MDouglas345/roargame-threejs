@@ -85,6 +85,8 @@ export class TestNetworkManager extends NetworkManager{
 
         this.EJSHook = null;
 
+        this.showUI = false;
+
         
 
 
@@ -124,7 +126,17 @@ export class TestNetworkManager extends NetworkManager{
     }
 
     createEJSLayer(){
+        this.EJSHook = document.createElement('div');
+        this.EJSHook.className += "container text-justify position-absolute top-0 h-100 z-index-3";
+        let textnode = document.createElement('p');
+        textnode.className += "h1";
+        textnode.innerHTML = "TEST!";
+
+        this.EJSHook.appendChild(textnode);
         
+        document.body.appendChild(this.EJSHook);
+
+
     }
 
     applyChanges(){
@@ -226,6 +238,18 @@ export class TestNetworkManager extends NetworkManager{
 
     }
 
-    Show
+    ToggleUI(){
+        if (this.showUI){
+            this.showUI = false;
+            this.EJSHook.style = "display : none";
+            return;
+        }
+
+
+        this.showUI = true;
+        this.EJSHook.style = "display : block";
+        
+
+    }
 
 }

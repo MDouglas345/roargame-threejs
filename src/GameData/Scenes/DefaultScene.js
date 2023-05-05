@@ -88,6 +88,7 @@ export class DefaultScene extends Scene{
 
         HostToggler.onClick = function(){
             roarengine.mNetworkManager.ToggleHosting();
+            //roarengine.mNetworkManager.ToggleUI();
         }
 
         ConnectHost.onClick = function(){
