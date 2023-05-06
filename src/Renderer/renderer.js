@@ -48,7 +48,9 @@ class ThreeRenderer{
         this.Raycaster = new THREE.Raycaster();
 
 
-        
+        this.EJSHook = null;
+
+        this.createEJSLayer();
 
         
     }
@@ -131,6 +133,23 @@ class ThreeRenderer{
         }
 
         intersects[0].object.ObjReference.onClick();
+    }
+
+    createEJSLayer(){
+        this.EJSHook = document.createElement('div');
+        this.EJSHook.className += "container position-absolute top-0 h-100 w-100 z-index-3";
+        
+
+        let row = document.createElement('div');
+        row.className += "row justify-content-center";
+        row.id = "EJSHook";
+        
+        this.EJSHook.appendChild(row);
+        document.body.appendChild(this.EJSHook);
+
+        this.EJSHook = $('#EJSHook');
+
+
     }
 }
 

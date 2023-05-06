@@ -10,6 +10,8 @@ import { Background2D } from "../../BaseObjects/background2d";
 import { TestUiMenu } from "../../BaseObjects/testUIMenu";
 import CSS2DRenderer from "three/examples/jsm/renderers/CSS2DRenderer.js"
 import * as roarengine from "../../index.js";
+import HTMLUIGameObject from "../../BaseObjects/htmluigameobject";
+import mainmenuejs from "../EJS/mainmenu.ejs";
 
 
 
@@ -81,14 +83,15 @@ export class DefaultScene extends Scene{
         let bg = new Background2D(1, 5310,3000);
         this.addObject(bg, 0);
 
+        let testhtml = new HTMLUIGameObject(mainmenuejs);
         
         uitestobj.onClick = function(){
             menutest.ToggleVisibility();
         }
 
         HostToggler.onClick = function(){
-            roarengine.mNetworkManager.ToggleHosting();
-            //roarengine.mNetworkManager.ToggleUI();
+            //roarengine.mNetworkManager.ToggleHosting();
+            testhtml.ToggleRender();
         }
 
         ConnectHost.onClick = function(){
@@ -127,6 +130,8 @@ export class DefaultScene extends Scene{
         this.addObject(HostToggler, 0);
         this.addObject(ConnectHost, 0);
         this.addObject(menutest, 0);
+
+        this.addObject(testhtml,0);
         
 
 

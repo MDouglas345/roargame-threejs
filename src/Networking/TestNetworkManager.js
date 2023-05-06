@@ -118,26 +118,14 @@ export class TestNetworkManager extends NetworkManager{
             this.ActiveState.connect(conn);
         });
 
-        this.createEJSLayer();
+        
 
         
 
 
     }
 
-    createEJSLayer(){
-        this.EJSHook = document.createElement('div');
-        this.EJSHook.className += "container text-justify position-absolute top-0 h-100 z-index-3";
-        let textnode = document.createElement('p');
-        textnode.className += "h1";
-        textnode.innerHTML = "TEST!";
-
-        this.EJSHook.appendChild(textnode);
-        
-        document.body.appendChild(this.EJSHook);
-
-
-    }
+    
 
     applyChanges(){
 
